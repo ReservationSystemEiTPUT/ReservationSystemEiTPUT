@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AppController">
    <top>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,11 +30,12 @@
             </MenuBar>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField />
-                  <TextField layoutX="10.0" layoutY="10.0" />
-                  <Button mnemonicParsing="false" text="Loguj" />
+                  <TextField id="username" fx:id="nazwaUzytkownika" onKeyPressed="#wpisywanie" />
+                  <TextField id="Password" layoutX="10.0" layoutY="10.0" />
+                  <Button mnemonicParsing="false" onAction="#loginClicked" text="Loguj" />
                </children>
             </HBox>
+            <TextField fx:id="wyswietlacz" />
          </children>
       </VBox>
    </top>
