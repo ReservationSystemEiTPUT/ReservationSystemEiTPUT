@@ -30,8 +30,8 @@
             </MenuBar>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField id="username" fx:id="nazwaUzytkownika" onKeyPressed="#wpisywanie" />
-                  <TextField id="Password" layoutX="10.0" layoutY="10.0" />
+                  <TextField id="Username" fx:id="username" />
+                  <TextField id="Password" fx:id="password" layoutX="10.0" layoutY="10.0" />
                   <Button mnemonicParsing="false" onAction="#loginClicked" text="Loguj" />
                </children>
             </HBox>
