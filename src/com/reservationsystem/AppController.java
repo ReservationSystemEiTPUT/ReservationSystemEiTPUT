@@ -53,5 +53,6 @@ public class AppController {
 	
 	public void wpisywanie()
 	{
+		
 	}
 }
