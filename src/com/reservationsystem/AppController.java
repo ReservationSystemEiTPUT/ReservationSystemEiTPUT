@@ -2,9 +2,13 @@ package com.reservationsystem;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 
 public class AppController {
 	@FXML 
@@ -13,8 +17,10 @@ public class AppController {
 	public TextField password;
 	@FXML 
 	public TextField wyswietlacz;
+
 	public void loginClicked() 
 	{
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("JEEEE");

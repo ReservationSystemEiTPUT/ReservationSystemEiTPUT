@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane prefHeight="300.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <PasswordField layoutX="45.0" layoutY="197.0" prefHeight="30.0" prefWidth="250.0" promptText="haslo" />
+            <TextField layoutX="45.0" layoutY="138.0" prefHeight="30.0" prefWidth="250.0" promptText="login" />
+            <Text layoutX="45.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="System rezerwacji sal">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button layoutX="333.0" layoutY="197.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Loguj" />
+            <Button layoutX="333.0" layoutY="244.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Stwórz nowe konto" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
