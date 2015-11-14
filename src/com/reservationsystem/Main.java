@@ -1,5 +1,7 @@
 package com.reservationsystem;
 	
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -11,22 +13,16 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+	
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-		
-	    Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
-	    Scene scenka = new Scene(root);
-	    primaryStage = new Stage();
-	    primaryStage.initStyle(StageStyle.UNDECORATED);
-	    primaryStage.setScene(scenka);
-        primaryStage.show();
-        primaryStage.setResizable(false);
-       
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void start(Stage primaryStage) throws IOException  {
+		Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
+		Scene scene = new Scene(root);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+		primaryStage.setScene(scene);
+		primaryStage.centerOnScreen();
+		primaryStage.show();
+		primaryStage.setResizable(false);
 	}
 	
 	public static void main(String[] args) {

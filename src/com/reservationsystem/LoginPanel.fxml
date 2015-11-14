@@ -6,10 +6,11 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import java.util.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AppController">
+<BorderPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.LoginPanelController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 2; -fx-border-color: #2e8b57;" BorderPane.alignment="CENTER">
          <children>
@@ -21,7 +22,7 @@
                </font>
             </Text>
             <Button layoutX="333.0" layoutY="197.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Loguj" />
-            <Button layoutX="333.0" layoutY="244.0" mnemonicParsing="false" onAction="#wpisywanie" prefHeight="30.0" prefWidth="130.0" text="Stwórz nowe konto" />
+            <Button layoutX="333.0" layoutY="244.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" onAction="#handleButtonAction" text="Stwórz nowe konto" />
             <Box layoutX="110.0" layoutY="45.0" />
          </children>
          <cursor>
