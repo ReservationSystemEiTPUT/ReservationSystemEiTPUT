@@ -18,8 +18,11 @@ public class Main extends Application {
 	    Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
 	    Scene scenka = new Scene(root);
 	    primaryStage = new Stage();
+	    primaryStage.initStyle(StageStyle.UNDECORATED);
 	    primaryStage.setScene(scenka);
         primaryStage.show();
+        primaryStage.setResizable(false);
+       
 			
 		} catch(Exception e) {
 			e.printStackTrace();
