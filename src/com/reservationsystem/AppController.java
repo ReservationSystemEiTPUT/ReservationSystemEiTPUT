@@ -34,7 +34,7 @@ public class AppController {
 
 		@Override
 		public void run() {
-			Connection con = Main.getConnection();
+			Connection con = Main.getConnection(); 
 			java.sql.Statement st = null;
 			try {
 				st = con.createStatement();

@@ -42,7 +42,7 @@ public class Main extends Application {
 	}
 	
 	
-	
+	//funkcja do otrzymywania po³¹czenia z baz¹ danych
 	public static Connection getConnection ()
 	{
 		Connection con = null;

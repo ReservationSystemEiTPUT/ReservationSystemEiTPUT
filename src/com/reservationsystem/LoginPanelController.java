@@ -42,6 +42,7 @@ public class LoginPanelController implements Initializable{
 	@FXML
 	Text incorrectLogin;
 	
+	//zmienianie sceny po wcisnieciu stworz nowe konto
 	@FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
         System.out.println("You clicked me!");
@@ -99,6 +100,12 @@ public class LoginPanelController implements Initializable{
 				Main.password = passwordField.getText();
 				System.out.println("You made it, take control your database now!");
 			    loginCorrect();
+			    try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				
 				System.out.println("Failed to make connection!");
@@ -107,7 +114,7 @@ public class LoginPanelController implements Initializable{
 			
 		}
 	}
-	
+	//zmienianie sceny je¿eli login poprawny
 	 public void loginCorrect()
 	  {
 	    Platform.runLater(new Runnable() {
