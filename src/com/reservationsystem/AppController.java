@@ -6,8 +6,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.mysql.jdbc.Statement;
+import com.reservationsystem.LoginPanelController.databaseAccess;
 
 
 public class AppController {
@@ -17,42 +21,45 @@ public class AppController {
 	public TextField password;
 	@FXML 
 	public TextField wyswietlacz;
-
-	public void loginClicked() 
+    
+	public void wpisywanie() throws SQLException
 	{
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("JEEEE");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Where is your MySQL JDBC Driver?");
-			e.printStackTrace();
-			return;
-		}
-		Connection connection = null;
-
-		try {
-			connection = DriverManager
-			.getConnection("jdbc:mysql://51.254.206.180:3306/ROOMS_RESERVATION",username.getText(),password.getText());
-		} catch (SQLException e) {
-			wyswietlacz.setText("ZJEBA£EŒ");
-			System.out.println("Connection Failed! Check output console");
-			//e.printStackTrace();
-			return;
-		}
-
-		if (connection != null) {
-			System.out.println("You made it, take control your database now!");
-			wyswietlacz.setText("UDA£O CI SIÊ KURWA");
-		} else {
-			wyswietlacz.setText("ZJEBA£EŒ");
-			System.out.println("Failed to make connection!");
-
-		}
+		 databaseAccess thread1 = new databaseAccess();
+		    (new Thread(thread1)).start();
+	
 	}
 	
-	public void wpisywanie()
-	{
-		
+	
+	public class databaseAccess implements Runnable {
+
+		@Override
+		public void run() {
+			Connection con = Main.getConnection();
+			java.sql.Statement st = null;
+			try {
+				st = con.createStatement();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String sql = ("SELECT * FROM ROOMS ;");
+			ResultSet rs = null ;
+			try {
+				rs = st.executeQuery(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				 while (rs.next()) {
+				System.out.print(rs.getString("Building"));
+				 }
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
+	
+

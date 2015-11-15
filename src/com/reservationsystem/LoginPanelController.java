@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,18 +45,18 @@ public class LoginPanelController implements Initializable{
 	@FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
         System.out.println("You clicked me!");
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("App.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
+        Parent create_new_account_page = FXMLLoader.load(getClass().getResource("App.fxml"));
+        Scene create_new_account_scene = new Scene(create_new_account_page);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         
-        app_stage.setScene(home_page_scene);
+        
+        app_stage.setScene(create_new_account_scene);
         app_stage.centerOnScreen();
         app_stage.show();
         
     }
 	
 	public void loginButton() {
-
+        incorrectLogin.setVisible(false);
 	    loadingBar.setVisible(true);
 	    databaseAccess thread1 = new databaseAccess();
 	    (new Thread(thread1)).start();
@@ -70,8 +71,7 @@ public class LoginPanelController implements Initializable{
 
 		@Override
 		public void run() {
-			Connection connection = null;
-	        int wasError=0;
+			Connection con = null;
 		    try {
 				Class.forName("com.mysql.jdbc.Driver");
 				
@@ -81,22 +81,24 @@ public class LoginPanelController implements Initializable{
 			}
 
 			try {
-				connection = DriverManager
+				con = DriverManager
 				.getConnection("jdbc:mysql://51.254.206.180",loginField.getText(),passwordField.getText());
 			} catch (SQLException e) {
 				loadingBar.setVisible(false);
 				
 				if (e.getErrorCode() == 1045)
 					incorrectLogin.setVisible(true);
-				
+			
 				System.out.println("Connection Failed! Check output console");
 				e.printStackTrace();
 				return;
 			}
 
-			if (connection != null) {
+			if (con != null) {
+				Main.login = loginField.getText();
+				Main.password = passwordField.getText();
 				System.out.println("You made it, take control your database now!");
-				
+			    loginCorrect();
 			} else {
 				
 				System.out.println("Failed to make connection!");
@@ -104,9 +106,27 @@ public class LoginPanelController implements Initializable{
 			}
 			
 		}
-     
-
 	}
+	
+	 public void loginCorrect()
+	  {
+	    Platform.runLater(new Runnable() {
+	      @Override public void run() {
+	          Parent logged_page = null;
+			try {
+				logged_page = FXMLLoader.load(getClass().getResource("App.fxml"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	          Scene logged_page_scene = new Scene(logged_page);
+	          Stage app_stage = (Stage) loadingBar.getScene().getWindow();
+	          
+	          app_stage.setScene(logged_page_scene);
+	          app_stage.centerOnScreen();
+	          app_stage.show();
+	      }
+	    });
+	  }
 		
 }
 
