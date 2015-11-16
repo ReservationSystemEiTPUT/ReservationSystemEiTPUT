@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AdminPanelController">
+   <top>
+      <Button mnemonicParsing="false" prefHeight="102.0" prefWidth="204.0" text="Rezerwacje użytkowników" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </top>
+   <center>
+      <Button mnemonicParsing="false" prefHeight="102.0" prefWidth="204.0" text="Nowi uzytkownicy" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Button>
+   </center>
+   <bottom>
+      <Button mnemonicParsing="false" prefHeight="102.0" prefWidth="204.0" text="Ustawienia" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <left>
+      <VBox prefHeight="226.0" prefWidth="207.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#click_add_reservation_button" prefHeight="64.0" prefWidth="165.0" text="Dodaj rezerwację">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Button>
+            <CheckBox fx:id="MultipleReservation" disable="true" mnemonicParsing="false" text="Cykliczna">
+               <VBox.margin>
+                  <Insets left="70.0" />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="SimpleReservation" disable="true" mnemonicParsing="false" text="Pojedyncza">
+               <VBox.margin>
+                  <Insets left="70.0" />
+               </VBox.margin>
+            </CheckBox>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="266.0" prefWidth="207.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="165.0" text="Usuń rezerwację">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Button>
+            <ChoiceBox prefWidth="150.0">
+               <VBox.margin>
+                  <Insets left="28.0" />
+               </VBox.margin>
+            </ChoiceBox>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

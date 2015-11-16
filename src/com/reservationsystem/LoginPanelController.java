@@ -109,21 +109,23 @@ public class LoginPanelController implements Initializable{
 	}
 	
 	 public void loginCorrect()
-	  {
+	 {
 	    Platform.runLater(new Runnable() {
 	      @Override public void run() {
 	          Parent logged_page = null;
 			try {
-				logged_page = FXMLLoader.load(getClass().getResource("App.fxml"));
+				logged_page = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 	          Scene logged_page_scene = new Scene(logged_page);
 	          Stage app_stage = (Stage) loadingBar.getScene().getWindow();
-	          
+	          app_stage.setTitle("Panel administratora");
 	          app_stage.setScene(logged_page_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();
+	          
+	          
 	      }
 	    });
 	  }
