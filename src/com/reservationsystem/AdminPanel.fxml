@@ -39,12 +39,12 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Button>
-            <CheckBox fx:id="MultipleReservation" disable="true" mnemonicParsing="false" text="Cykliczna">
+            <CheckBox fx:id="MultipleReservation" mnemonicParsing="false" text="Cykliczna" visible="false">
                <VBox.margin>
                   <Insets left="70.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox fx:id="SimpleReservation" disable="true" mnemonicParsing="false" text="Pojedyncza">
+            <CheckBox fx:id="SimpleReservation" mnemonicParsing="false" text="Pojedyncza" visible="false">
                <VBox.margin>
                   <Insets left="70.0" />
                </VBox.margin>

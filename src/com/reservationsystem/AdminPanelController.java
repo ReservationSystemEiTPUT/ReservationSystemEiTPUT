@@ -47,6 +47,11 @@ public class AdminPanelController implements Initializable {
 		
 	}
 	
+	@FXML
+	public void click_add_multiple_reservation () {
+		
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
