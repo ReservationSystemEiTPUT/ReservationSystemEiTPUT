@@ -49,6 +49,7 @@ public class AdminPanelController implements Initializable {
 	
 	@FXML
 	public void click_add_multiple_reservation () {
+		SimpleReservation.setDisable(true);
 		
 	}
 	
