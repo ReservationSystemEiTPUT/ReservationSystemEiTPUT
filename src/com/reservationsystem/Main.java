@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 
 
@@ -21,7 +18,8 @@ public class Main extends Application {
 	public static Connection con = null;
 	public static String login;
 	public static String password;
-	
+	public static String name;
+	public static boolean employed;
 	@Override
 	public void start(Stage primaryStage) throws IOException  {
 		Platform.setImplicitExit(false);
@@ -29,7 +27,7 @@ public class Main extends Application {
 		Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
 		Scene scene = new Scene(root);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
-		primaryStage.setTitle("DUPNA APLIKACJA");
+		primaryStage.setTitle("System Rezerwacji Sal");
 		primaryStage.setScene(scene);
 		primaryStage.centerOnScreen();
 		primaryStage.show();
@@ -56,27 +54,36 @@ public class Main extends Application {
 
 		try {
 			con = DriverManager
-			.getConnection("jdbc:mysql://51.254.206.180/ROOMS_RESERVATION",login,password);
+			.getConnection("jdbc:mysql://51.254.206.180/ROOMS_RESERVATION?useUnicode=true&characterEncoding=UTF-8",login,password);
 		} catch (SQLException e) {
 			
 			if (e.getErrorCode() == 1045)
 		
-			System.out.println("Connection Failed! Check output console");
+			//System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return null;
 		}
 
 		if (con != null) {
-			System.out.println("You made it, take control your database now!");
+			//System.out.println("You made it, take control your database now!");
 			return con;
 		    
 		} else {
 			
-			System.out.println("Failed to make connection!");
+			//System.out.println("Failed to make connection!");
 
 		}
 		return null;
 	}
 	
+	public static long hashText (String text)
+	{
+		long hash = 5834;
+		for (int i = 0; i < text.length(); i++) {
+		    hash = hash*179 + text.charAt(i);
+		}
+		System.out.println(hash);
+		return hash;
+	}
 	
 }

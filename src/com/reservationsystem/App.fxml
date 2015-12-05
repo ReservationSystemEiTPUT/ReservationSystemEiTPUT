@@ -34,6 +34,7 @@
                   <TextField id="Username" fx:id="username" />
                   <TextField id="Password" fx:id="password" layoutX="10.0" layoutY="10.0" />
                   <Button mnemonicParsing="false" onAction="#wpisywanie" text="Loguj" />
+                  <DatePicker fx:id="DatePick" onAction="#actionnn" />
                </children>
             </HBox>
             <TextField fx:id="wyswietlacz" />
