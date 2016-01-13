@@ -1,43 +1,48 @@
 package com.reservationsystem;
 
+import java.awt.Insets;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
 import com.mysql.jdbc.PreparedStatement;
+import com.reservationsystem.CreatingAccountPanelController.databaseAccess;
+import com.reservationsystem.DeleteSimpleReservationPanelController.DataToTable;
+import com.reservationsystem.DeleteSimpleReservationPanelController.DeleteReservation;
+import com.reservationsystem.DeleteSimpleReservationPanelController.GetCountFromReservation;
+import com.reservationsystem.DeleteSimpleReservationPanelController.SelectFromReservation;
+import com.reservationsystem.DeleteSimpleReservationPanelController.SetData;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.scene.Group;
 
-public class AddNewUsersPanelController {
+public class DeleteUserPanelController {
 	
-	public static ResultSet get_result_set_for_my_query (String Query) throws SQLException{
-		Connection NewConnection = Main.getConnection();
-		PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection
-				.prepareStatement(Query);
-		ResultSet Result = NewPreparedStatement.executeQuery();
-		return Result;
-	}
-	
-	public static void get_result_set_for_my_update(String Query) throws SQLException {
-		Connection NewConnection = Main.getConnection();
-		PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection
-				.prepareStatement(Query);
-		NewPreparedStatement.executeUpdate();
-	}
 	@FXML
     private TableView<DataToTable> MyTable = new TableView<DataToTable>();
     private final ObservableList<DataToTable> Data =
@@ -56,7 +61,7 @@ public class AddNewUsersPanelController {
     
     public class SelectFromUsers implements Callable<ResultSet> {
     private ResultSet get_data_from_users () throws SQLException {
-		ResultSet Result = get_result_set_for_my_query("SELECT * FROM NEW_USERS");
+		ResultSet Result = AddNewUsersPanelController.get_result_set_for_my_query("SELECT * FROM USERS");
 		return Result;
 	}
 
@@ -69,7 +74,7 @@ public class AddNewUsersPanelController {
     
     public class GetCountFromUsers implements Callable {
 	private int get_count_of_users() throws SQLException {
-		ResultSet Result = get_result_set_for_my_query("SELECT COUNT(*) FROM NEW_USERS");
+		ResultSet Result = AddNewUsersPanelController.get_result_set_for_my_query("SELECT COUNT(*) FROM USERS");
 		Result.next();
 		System.out.print(Result.getInt(1));
 		return Result.getInt(1);
@@ -92,6 +97,7 @@ public class AddNewUsersPanelController {
         Data.add(new DataToTable(Name,Surname,Login,Email));
 	}
     
+    @SuppressWarnings("unchecked")
     public class SetData implements Runnable {
 	private void set_data_to_table() throws Exception {
     	GetCountFromUsers thread1 = new GetCountFromUsers();
@@ -117,7 +123,6 @@ public class AddNewUsersPanelController {
 		}
 	}
     }
-	@SuppressWarnings("unchecked")
 	public void initialize() throws Exception {
 		
 		AskPane1.setVisible(false);
@@ -182,19 +187,21 @@ public class AddNewUsersPanelController {
 	@FXML
 	Button DeleteButton;
 	@FXML
-	Button AddButton;
-	@FXML
 	Pane AskPane1;
 	@FXML
 	Pane AskPane2;
 	
 	public class DeleteReservation implements Runnable {
-	private void delete_user_from_db(int index) throws SQLException {
+	private void delete_reservation_from_db(int index) throws SQLException {
 		Connection con = Main.getConnection();
 	    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("delete from "
-	    		+ "NEW_USERS where Login=?");
+	    		+ "USERS where Login=?");
+	    MyStatement.setString(1, LoginColumn.getCellData(index));
+	    String Update = "drop user " + LoginColumn.getCellData(index);
+	    PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement(Update);
 	    MyStatement.setString(1, LoginColumn.getCellData(index));
 		MyStatement.executeUpdate();
+		MyStatement1.executeUpdate();
 		con.close();
 		}
 	private int index;
@@ -206,91 +213,13 @@ public class AddNewUsersPanelController {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			delete_user_from_db(index);
+			delete_reservation_from_db(index);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	}
-	
-	public class AddUser implements Runnable {
-		private void insert_user_from_db(int index) throws SQLException {
-			Connection con = Main.getConnection();
-		    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into USERS select * FROM "
-		    		+ "NEW_USERS d where Login=?");
-		    MyStatement.setString(1, LoginColumn.getCellData(index));
-			MyStatement.executeUpdate();
-			con.close();
-			}
-		private int index;
-		private AddUser(int index) {
-			this.index = index;
-		}
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			try {
-				insert_user_from_db(index);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		}
-	
-	public class AddGrant implements Runnable {
-		
-		private String get_password(int index) throws SQLException{
-			Connection con = Main.getConnection();
-			PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("SELECT "
-					+ "AES_DECRYPT(Password,UNHEX('F3229A0B371ED2D9441B830D21A390C3')) from "
-					+ "NEW_USERS WHERE LOGIN =?");
-			 MyStatement.setString(1, LoginColumn.getCellData(index));
-			 ResultSet Password = MyStatement.executeQuery();
-			 Password.next();
-			 return Password.getString(1);
-		}
-		
-		private void add_user_from_db(int index) throws SQLException {
-			Connection con = Main.getConnection();
-			String Login = LoginColumn.getCellData(index);
-			String Password = get_password(index);
-		    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("CREATE USER ?@'%' identified by ?");
-		    MyStatement.setString(1, Login);
-		    MyStatement.setString(2, Password);
-		    PreparedStatement MyStatement2 = (PreparedStatement) con.prepareStatement("GRANT SELECT ON RESERVATIONS TO ?@'%'");
-		    MyStatement2.setString(1, Login);
-		    PreparedStatement MyStatement3 = (PreparedStatement) con.prepareStatement("GRANT SELECT ON ROOMS TO ?@'%'");
-		    MyStatement3.setString(1, Login);		    
-		    PreparedStatement MyStatement4 = (PreparedStatement) con.prepareStatement("GRANT SELECT, UPDATE ON users_settings TO ?@'%'");
-		    MyStatement4.setString(1, Login);
-		    PreparedStatement MyStatement5 = (PreparedStatement) con.prepareStatement("GRANT SELECT, INSERT ON users_reservations TO ?@'%'");
-		    MyStatement5.setString(1, Login);
-		    MyStatement.executeUpdate();
-		    MyStatement2.executeUpdate();
-		    MyStatement3.executeUpdate();
-		    MyStatement4.executeUpdate();		    
-		    MyStatement5.executeUpdate();
-			con.close();
-			}
-		private int index;
-		private AddGrant(int index) {
-			this.index = index;
-		}
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			try {
-				add_user_from_db(index);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		}
 	
 	private void ask_what_next() {
 		AskPane1.setVisible(true);
@@ -322,8 +251,6 @@ public class AddNewUsersPanelController {
 		AskPane1.setVisible(false);
 		AskPane2.setVisible(false);
 		DeleteButton.setDisable(false);
-		UndoButton.setDisable(false);
-		AddButton.setDisable(false);
 		MyTable.setVisible(false);
 		Data.clear();
 		SetData thread1 = new SetData();
@@ -345,33 +272,8 @@ public class AddNewUsersPanelController {
 			}
 		}
 		DeleteButton.setDisable(true);
-		AddButton.setDisable(true);
-		UndoButton.setDisable(true);
 		ask_what_next();
 	}
-	
-	@FXML
-	public void click_on_add_button () throws Exception {
-		GetCountFromUsers thread1 = new GetCountFromUsers();
-    	int cout_of_rows = (int) (thread1.call());
-		CheckBox Check; 
-		for (int i = 0;i < cout_of_rows;i++)
-		{
-			Check = (CheckBox) CheckBoxColumn.getCellData(i);
-			if(Check.isSelected()) {
-				AddUser thread3 = new AddUser(i);
-				thread3.run();
-				AddGrant thread4 = new AddGrant(i);
-				thread4.run();
-				DeleteReservation thread2 = new DeleteReservation(i);
-				thread2.run();
-			}
-		}
-		DeleteButton.setDisable(true);
-		AddButton.setDisable(true);
-		UndoButton.setDisable(true);
-		ask_what_next();
-	}	
 	
 	@FXML
 	Button UndoButton;

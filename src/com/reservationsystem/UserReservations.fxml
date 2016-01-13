@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" stylesheets="@moj.css" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.UserReservationsController">
+   <children>
+      <ChoiceBox fx:id="typeOfReservation" layoutX="377.0" layoutY="39.0" prefWidth="150.0" />
+      <Label layoutX="94.0" layoutY="39.0" prefHeight="25.0" prefWidth="186.0" text="Wybierz rodzaj rezerwacji" />
+      <Pane layoutX="41.0" layoutY="76.0">
+         <children>
+            <Pane fx:id="waitPane" layoutX="105.0" layoutY="30.0" prefHeight="200.0" prefWidth="309.0" visible="false">
+               <children>
+                  <ProgressIndicator layoutX="89.0" layoutY="45.0" prefHeight="110.0" prefWidth="131.0" />
+               </children>
+            </Pane>
+            <TableView fx:id="userReservations" prefHeight="260.0" prefWidth="518.0" visible="false">
+              <columns>
+                <TableColumn fx:id="dateColumn" prefWidth="126.0" text="Data" />
+                <TableColumn fx:id="dayColumn" minWidth="2.0" prefWidth="78.0" text="Dzień" />
+                  <TableColumn fx:id="hourColumn" minWidth="0.0" prefWidth="115.0" text="Godzina" />
+                  <TableColumn fx:id="buildingColumn" prefWidth="87.0" text="Budynek" />
+                  <TableColumn fx:id="roomColumn" prefWidth="111.0" text="Pokój" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Button fx:id="cancel" layoutX="225.0" layoutY="349.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="31.0" prefWidth="150.0" text="Wróć" />
+   </children>
+</Pane>

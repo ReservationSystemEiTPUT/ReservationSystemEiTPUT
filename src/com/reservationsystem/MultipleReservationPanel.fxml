@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.MultipleReservationPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#click_on_double_reservation" prefHeight="702.0" prefWidth="601.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.MultipleReservationPanelController">
    <children>
-      <ChoiceBox fx:id="DayOfTheWeekBox" layoutX="178.0" layoutY="39.0" prefHeight="25.0" prefWidth="126.0" />
-      <ChoiceBox fx:id="FrequencyBox" layoutX="178.0" layoutY="85.0" prefHeight="25.0" prefWidth="126.0" />
-      <ChoiceBox fx:id="BuildingBox" layoutX="178.0" layoutY="129.0" prefHeight="25.0" prefWidth="126.0" />
-      <Label layoutX="31.0" layoutY="43.0" prefHeight="17.0" prefWidth="126.0" text="Dzień Tygodnia" />
-      <Label layoutX="31.0" layoutY="89.0" prefHeight="17.0" prefWidth="126.0" text="Częstotliwość" />
-      <Label layoutX="31.0" layoutY="133.0" prefHeight="17.0" prefWidth="126.0" text="Budynek" />
-      <Label layoutX="31.0" layoutY="177.0" prefHeight="17.0" prefWidth="126.0" text="Nr sali" />
-      <ChoiceBox fx:id="RoomsNumberBox" layoutX="178.0" layoutY="173.0" onMouseEntered="#click_on_building_box" prefHeight="25.0" prefWidth="126.0" />
-      <Label layoutX="31.0" layoutY="280.0" prefHeight="17.0" prefWidth="126.0" text="Prowadzący" />
-      <Label layoutX="31.0" layoutY="367.0" prefHeight="17.0" prefWidth="126.0" text="Rok" />
-      <Label layoutX="31.0" layoutY="327.0" prefHeight="17.0" prefWidth="126.0" text="Przedmiot" />
-      <Label layoutX="31.0" layoutY="410.0" prefHeight="17.0" prefWidth="126.0" text="Grupa" />
-      <ChoiceBox fx:id="GroupBox" layoutX="178.0" layoutY="406.0" onMousePressed="#click_on_year_box" prefHeight="25.0" prefWidth="126.0" />
-      <ChoiceBox fx:id="YearBox" layoutX="178.0" layoutY="363.0" prefHeight="25.0" prefWidth="126.0" />
-      <TextField fx:id="LecturerBox" layoutX="167.0" layoutY="276.0" />
-      <TextField fx:id="SubjectBox" layoutX="167.0" layoutY="323.0" />
-      <Button fx:id="AddButton" layoutX="167.0" layoutY="488.0" mnemonicParsing="false" onAction="#click_on_add_buton" text="Dodaj" />
-      <Label layoutX="31.0" layoutY="223.0" prefHeight="17.0" prefWidth="126.0" text="Godziny" />
-      <ChoiceBox fx:id="HoursBox" layoutX="178.0" layoutY="219.0" prefHeight="25.0" prefWidth="126.0" />
-      <Label layoutX="30.0" layoutY="447.0" prefHeight="17.0" prefWidth="126.0" text="Pierwszy dzień rezerwacji" />
-      <DatePicker fx:id="DateBox" layoutX="155.0" layoutY="443.0" />
-      <Label fx:id="LabelField" layoutX="42.0" layoutY="14.0" prefHeight="17.0" prefWidth="255.0" textFill="#eb0e0e" visible="false" />
+      <ChoiceBox fx:id="FrequencyBox" layoutX="320.0" layoutY="34.0" prefHeight="31.0" prefWidth="259.0" />
+      <DatePicker fx:id="DateBox" layoutX="320.0" layoutY="81.0" prefHeight="31.0" prefWidth="259.0" />
+      <ChoiceBox fx:id="BuildingBox" layoutX="320.0" layoutY="208.0" prefHeight="31.0" prefWidth="259.0" />
+      <ChoiceBox fx:id="RoomsNumberBox" layoutX="320.0" layoutY="253.0" prefHeight="31.0" prefWidth="259.0" />
+      <ChoiceBox fx:id="YearBox" layoutX="320.0" layoutY="297.0" prefHeight="31.0" prefWidth="259.0" />
+      <TextField fx:id="SubjectBox" layoutX="320.0" layoutY="417.0" prefHeight="31.0" prefWidth="259.0" />
+      <TextField fx:id="LecturerBox" layoutX="320.0" layoutY="467.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="23.0" layoutY="39.0" prefHeight="21.0" prefWidth="259.0" text="Częstotliwość" textAlignment="CENTER" />
+      <Label layoutX="23.0" layoutY="86.0" prefHeight="21.0" prefWidth="259.0" text="Data" />
+      <Label layoutX="23.0" layoutY="213.0" prefHeight="21.0" prefWidth="259.0" text="Budynek" />
+      <Label layoutX="23.0" layoutY="258.0" prefHeight="21.0" prefWidth="259.0" text="Sala" />
+      <Label layoutX="23.0" layoutY="302.0" prefHeight="21.0" prefWidth="259.0" text="Rok" />
+      <Label layoutX="23.0" layoutY="345.0" prefHeight="21.0" prefWidth="259.0" text="Grupa" />
+      <Label layoutX="23.0" layoutY="425.0" prefHeight="21.0" prefWidth="259.0" text="Przedmiot" />
+      <Button fx:id="AddButton" layoutX="23.0" layoutY="600.0" mnemonicParsing="false" onAction="#click_on_add_buton" prefHeight="72.0" prefWidth="189.0" text="Dodaj" />
+      <Button fx:id="CheckButton" layoutX="212.0" layoutY="600.0" mnemonicParsing="false" onAction="#say_about_check" prefHeight="72.0" prefWidth="178.0" text="Sprawdź" />
+      <Button fx:id="UndoButton" layoutX="390.0" layoutY="600.0" mnemonicParsing="false" onAction="#click_undo" prefHeight="72.0" prefWidth="189.0" text="Wróć" />
+      <ChoiceBox fx:id="GroupBox" layoutX="320.0" layoutY="340.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="23.0" layoutY="475.0" prefHeight="21.0" prefWidth="259.0" text="Prowadzący" />
+      <Label layoutX="23.0" layoutY="521.0" prefHeight="21.0" prefWidth="259.0" text="Ilość powtórzeń" />
+      <TextField fx:id="Count" layoutX="320.0" layoutY="513.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="23.0" layoutY="126.0" prefHeight="21.0" prefWidth="76.0" text="Godzina" />
+      <ChoiceBox fx:id="HoursBox" layoutX="320.0" layoutY="121.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="99.0" layoutY="174.0" prefHeight="21.0" prefWidth="206.0" />
+      <CheckBox fx:id="DoubleReservation" layoutX="23.0" layoutY="174.0" mnemonicParsing="false" onAction="#click_on_double_reservation" prefHeight="21.0" prefWidth="189.0" text="Podwójna rezerwacja" />
+      <ChoiceBox fx:id="HoursBox2" layoutX="320.0" layoutY="169.0" prefHeight="31.0" prefWidth="259.0" />
+      <CheckBox fx:id="AllYear" layoutX="320.0" layoutY="379.0" mnemonicParsing="false" onAction="#click_on_all_years" prefHeight="21.0" prefWidth="189.0" text="Cały rok" />
+      <Pane fx:id="MyPane" layoutY="134.0" prefHeight="352.0" prefWidth="601.0" visible="false">
+         <children>
+            <Label fx:id="LabelField" alignment="CENTER" layoutX="116.0" layoutY="83.0" prefHeight="21.0" prefWidth="369.0" text="Proszę uzupełnić wszystkie pola aby dodać rezerwację" textAlignment="CENTER" />
+            <Button fx:id="OkButton" layoutX="218.0" layoutY="185.0" mnemonicParsing="false" onAction="#say_ok" prefHeight="72.0" prefWidth="165.0" text="Ok" />
+            <Button fx:id="YesButton" layoutX="70.0" layoutY="185.0" mnemonicParsing="false" onAction="#click_on_yes" prefHeight="72.0" prefWidth="165.0" text="Tak" />
+            <Button fx:id="NoButton" layoutX="363.0" layoutY="185.0" mnemonicParsing="false" onAction="#say_no" prefHeight="72.0" prefWidth="165.0" text="Nie" />
+            <Button fx:id="OkButton1" layoutX="228.0" layoutY="195.0" mnemonicParsing="false" onAction="#say_ok1" prefHeight="72.0" prefWidth="165.0" text="Ok" />
+         </children>
+      </Pane>
    </children>
 </Pane>

@@ -72,7 +72,33 @@ public class UserPanelController implements Initializable{
 	        app_stage.centerOnScreen();
 	        app_stage.show();
 	}
+	
+	@FXML
+	private void handleUserReservationsButton() throws IOException
+	{
+			
+			Parent user_reservation_page = FXMLLoader.load(getClass().getResource("UserReservations.fxml"));
+	        Scene user_reservation_scene = new Scene(user_reservation_page);
+	        Stage app_stage = (Stage) welcomeLabel.getScene().getWindow();
+	        app_stage.setTitle("Rezerwacje u¿ytkownika");
+	        app_stage.setScene(user_reservation_scene);
+	        app_stage.centerOnScreen();
+	        app_stage.show();
+	}
 
+	
+	@FXML
+	private void handleRoomsSchedule() throws IOException
+	{
+			
+			Parent rooms_schedule_page = FXMLLoader.load(getClass().getResource("RoomsSchedule.fxml"));
+	        Scene rooms_schedule_scene = new Scene(rooms_schedule_page);
+	        Stage app_stage = (Stage) welcomeLabel.getScene().getWindow();
+	        app_stage.setTitle("Rozk³ad rezerwacji");
+	        app_stage.setScene(rooms_schedule_scene);
+	        app_stage.centerOnScreen();
+	        app_stage.show();
+	}
 }
 
 

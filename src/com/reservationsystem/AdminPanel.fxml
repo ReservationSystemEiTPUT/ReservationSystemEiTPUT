@@ -6,14 +6,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AdminPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="392.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AdminPanelController">
    <children>
-      <Button fx:id="Reservations" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#click_add_reservation_button" prefHeight="81.0" prefWidth="365.0" text="Stwórz rezerwację" />
-      <Button layoutX="13.0" layoutY="105.0" mnemonicParsing="false" onAction="#click_add_new_reservation" prefHeight="81.0" prefWidth="365.0" text="Rezerwacje użytkowników" />
-      <Button layoutX="13.0" layoutY="200.0" mnemonicParsing="false" onAction="#click_add_new_users" prefHeight="81.0" prefWidth="365.0" text="Nowi użytkownicy" />
+      <Button fx:id="Reservations" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#click_add_reservation_button" prefHeight="81.0" prefWidth="365.0" text="Stwórz rezerwację" />
+      <Button layoutX="13.0" layoutY="105.0" mnemonicParsing="false" onAction="#click_add_new_reservation" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj nowymi rezerwacjami" />
+      <Button layoutX="13.0" layoutY="200.0" mnemonicParsing="false" onAction="#click_add_new_users" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj nowymi kontami użytkowników" />
       <Button fx:id="MultipleReservation" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#click_add_multiple_reservation" prefHeight="67.0" prefWidth="168.0" text="Cykliczna" visible="false" />
-      <Button fx:id="SimpleReservation" layoutX="196.0" layoutY="20.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="168.0" text="Pojedyncza" visible="false" />
-      <Button layoutX="14.0" layoutY="290.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="365.0" text="Usuń rezerwację" />
-      <Button fx:id="logout" layoutX="141.0" layoutY="392.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="52.0" prefWidth="110.0" text="Wyloguj" />
+      <Button fx:id="SimpleReservation" layoutX="196.0" layoutY="20.0" mnemonicParsing="false" onAction="#click_add_simple_reservation" prefHeight="67.0" prefWidth="168.0" text="Pojedyncza" visible="false" />
+      <Button fx:id="DeleteReservations" layoutX="14.0" layoutY="290.0" mnemonicParsing="false" onAction="#click_delete_reservation" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj rezerwacjami" />
+      <Button fx:id="logout" layoutX="141.0" layoutY="577.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="52.0" prefWidth="110.0" text="Wyloguj" />
+      <Button fx:id="DeleteMultipleReservations" layoutX="28.0" layoutY="297.0" mnemonicParsing="false" onAction="#click_delete_multiple_reservation" prefHeight="67.0" prefWidth="168.0" text="Cykliczna" visible="false" />
+      <Button fx:id="DeleteSimpleReservations" layoutX="196.0" layoutY="297.0" mnemonicParsing="false" onAction="#click_delete_simple_reservation" prefHeight="67.0" prefWidth="168.0" text="Pojedyncza" visible="false" />
+      <Button layoutX="14.0" layoutY="379.0" mnemonicParsing="false" onAction="#click_on_delete_user" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj kontami użytkowników" />
+      <Button layoutX="14.0" layoutY="470.0" mnemonicParsing="false" onAction="#click_database" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj bazą danych" />
    </children>
 </Pane>

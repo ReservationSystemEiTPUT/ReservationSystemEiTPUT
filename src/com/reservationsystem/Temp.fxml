@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane fx:id="MyScroll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AddNewUsersReservationsPanelController">
+<ScrollPane fx:id="MyScroll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AddNewUsersReservationPanelController">
    <content>
       <GridPane fx:id="NewPane" prefHeight="60.0" prefWidth="599.0">
         <columnConstraints>

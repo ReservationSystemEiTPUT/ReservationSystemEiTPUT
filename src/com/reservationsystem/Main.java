@@ -23,7 +23,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException  {
 		Platform.setImplicitExit(false);
-
+		System.out.println("WERSJA JAVAFX: " + com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 		Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
 		Scene scene = new Scene(root);
         //primaryStage.initStyle(StageStyle.UNDECORATED);

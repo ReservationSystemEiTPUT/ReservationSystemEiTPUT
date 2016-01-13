@@ -69,7 +69,7 @@ public class UserReservationPanelContoller implements Initializable{
 	Label reservationUnSucceed;
 	
 	ObservableList<String> HoursList = FXCollections
-			.observableArrayList("8:00-9:30","9:45-11:15","11:45-13:15","13:30-15:00","15:15-16:45","17:00-18:30","18:45-20:00");
+			.observableArrayList("8:00-9:30","9:45-11:15","11:45-13:15","13:30-15:00","15:15-16:45","17:00-18:30","18:45-20:15");
 	
 	ObservableList<String> buildingsList = FXCollections
 			.observableArrayList();
@@ -116,6 +116,8 @@ public class UserReservationPanelContoller implements Initializable{
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					System.out.println("ROZMIAR: " + newValue.intValue());
+					if (newValue.intValue() != -1){
 					reservationUnSucceed.setVisible(false);
 					noRoomsNotification.setVisible(false);
     		    	buildingChoice.getSelectionModel().clearSelection();
@@ -124,7 +126,7 @@ public class UserReservationPanelContoller implements Initializable{
     		    	roomChoice.setDisable(true);
 						sizeChanged task = new sizeChanged(sizeChoiceArray[newValue.intValue()]);
 		                new Thread(task).start(); //2
-		               
+					}
 				}
 			}); 
 	        
@@ -144,9 +146,13 @@ public class UserReservationPanelContoller implements Initializable{
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					if (newValue.intValue() != -1){
 					reservationUnSucceed.setVisible(false);
+					roomChoice.getSelectionModel().clearSelection();
+					roomChoice.getItems().clear();
 					buildingChanged task = new buildingChanged (buildingsList.get(newValue.intValue()));
 					new Thread(task).start();
+					}
 				}
 			});
 	        

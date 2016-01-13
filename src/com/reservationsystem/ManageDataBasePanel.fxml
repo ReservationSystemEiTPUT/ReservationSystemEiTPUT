@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/8" stylesheets="@moj.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.ManageDataBasePanelController">
+   <children>
+      <Button fx:id="Reservations" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#click_delete_reservations_table" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę rezerwacji" />
+      <Button fx:id="NewReservations" layoutX="13.0" layoutY="105.0" mnemonicParsing="false" onAction="#click_delete_new_reservations_table" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę oczekujących rezerwacji" />
+      <Button fx:id="Users" layoutX="13.0" layoutY="200.0" mnemonicParsing="false" onAction="#click_delete_users" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę użytkowników" />
+      <Button fx:id="NewUsers" layoutX="14.0" layoutY="290.0" mnemonicParsing="false" onAction="#click_delete_new_users" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę oczekujących użytkowników" />
+      <Button fx:id="logout" layoutX="142.0" layoutY="397.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="52.0" prefWidth="110.0" text="Wróć" />
+      <Pane fx:id="AskPane2" layoutY="141.0" prefHeight="200.0" prefWidth="392.0">
+            <children>
+      		<Button fx:id="YesButton1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_yes_button1" prefHeight="69.0" prefWidth="131.0" text="Tak" visible="false" />
+      		<Button fx:id="NoButton1" layoutX="218.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_no_button1" prefHeight="69.0" prefWidth="131.0" text="Nie" visible="false" />
+      		<Label fx:id="Label1" layoutX="147.0" layoutY="47.0" text="Jesteś pewien?" visible="false" />
+      		<Button fx:id="YesButton2" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_yes_button2" prefHeight="69.0" prefWidth="131.0" text="Tak" visible="false" />
+      		<Button fx:id="NoButton2" layoutX="218.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_no_button2" prefHeight="69.0" prefWidth="131.0" text="Nie" visible="false" />
+      		<Button fx:id="YesButton3" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_yes_button3" prefHeight="69.0" prefWidth="131.0" text="Tak" visible="false" />
+      		<Button fx:id="NoButton3" layoutX="218.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_no_button3" prefHeight="69.0" prefWidth="131.0" text="Nie" visible="false" />
+			<Button fx:id="YesButton4" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_yes_button4" prefHeight="69.0" prefWidth="131.0" text="Tak" visible="false" />
+      		<Button fx:id="NoButton4" layoutX="218.0" layoutY="100.0" mnemonicParsing="false" onAction="#say_no_button4" prefHeight="69.0" prefWidth="131.0" text="Nie" visible="false" />
+			</children>
+      </Pane>
+   </children>
+</Pane>

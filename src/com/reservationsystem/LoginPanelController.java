@@ -181,7 +181,7 @@ public class LoginPanelController implements Initializable{
 			
 		}
 	}
-	//zmienianie sceny je¿eli login poprawny
+	//zmienianie sceny jeÂ¿eli login poprawny
 	 public void loginCorrect(boolean admin)
 	 {
 	    Platform.runLater(new Runnable() {
@@ -200,7 +200,7 @@ public class LoginPanelController implements Initializable{
 			}
 	          Scene logged_page_scene = new Scene(logged_page);
 	          Stage app_stage = (Stage) loadingBar.getScene().getWindow();
-	          
+	          //logged_page_scene.getStylesheets().add("moj.css");
 	          app_stage.setScene(logged_page_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();
@@ -254,6 +254,3 @@ public class LoginPanelController implements Initializable{
 		}
 		
 }
-
-
-	

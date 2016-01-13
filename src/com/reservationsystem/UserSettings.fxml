@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.UserSettingsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@moj.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.UserSettingsController">
    <children>
       <Label layoutX="197.0" layoutY="14.0" prefHeight="34.0" prefWidth="184.0" text="Ustawienia konta" textAlignment="CENTER">
          <font>

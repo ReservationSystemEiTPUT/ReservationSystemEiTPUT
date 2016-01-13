@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="411.0" prefWidth="601.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.SingleReservationAdminController">
+   <children>
+      <DatePicker fx:id="DateBox" layoutX="320.0" layoutY="28.0" prefHeight="31.0" prefWidth="259.0" />
+      <ChoiceBox fx:id="BuildingBox" layoutX="320.0" layoutY="122.0" prefHeight="31.0" prefWidth="259.0" />
+      <ChoiceBox fx:id="SizeBox" layoutX="320.0" layoutY="168.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="23.0" layoutY="34.0" prefHeight="21.0" prefWidth="259.0" text="Data" />
+      <Label layoutX="23.0" layoutY="128.0" prefHeight="21.0" prefWidth="259.0" text="Budynek" />
+      <Label layoutX="23.0" layoutY="174.0" prefHeight="21.0" prefWidth="259.0" text="Wielkość sali" />
+      <Button fx:id="AddButton" layoutX="23.0" layoutY="314.0" mnemonicParsing="false" onAction="#click_add_button" prefHeight="72.0" prefWidth="259.0" text="Dodaj" />
+      <Button fx:id="UndoButton" layoutX="320.0" layoutY="314.0" mnemonicParsing="false" onAction="#click_undo" prefHeight="72.0" prefWidth="259.0" text="Wróć" />
+      <Label layoutX="23.0" layoutY="81.0" prefHeight="21.0" prefWidth="76.0" text="Godzina" />
+      <ChoiceBox fx:id="HoursBox" layoutX="320.0" layoutY="75.0" prefHeight="31.0" prefWidth="259.0" />
+      <Label layoutX="99.0" layoutY="174.0" prefHeight="21.0" prefWidth="206.0" />
+      <Pane fx:id="MyPane" layoutY="6.0" prefHeight="308.0" prefWidth="601.0" visible="false">
+         <children>
+            <Label fx:id="LabelField" alignment="CENTER" layoutX="116.0" layoutY="83.0" prefHeight="21.0" prefWidth="369.0" text="Proszę uzupełnić wszystkie pola aby dodać rezerwację" textAlignment="CENTER" />
+            <Button fx:id="OkButton" layoutX="218.0" layoutY="185.0" mnemonicParsing="false" onAction="#say_ok" prefHeight="72.0" prefWidth="165.0" text="Ok" />
+            <Button fx:id="YesButton" layoutX="70.0" layoutY="185.0" mnemonicParsing="false" onAction="#click_on_yes_button" prefHeight="72.0" prefWidth="165.0" text="Tak" />
+        	          <Button fx:id="NoButton" layoutX="363.0" layoutY="185.0" mnemonicParsing="false" onAction="#click_on_no_button" prefHeight="72.0" prefWidth="165.0" text="Nie" />
+         </children>
+      </Pane>
+      <Label layoutX="23.0" layoutY="219.0" prefHeight="21.0" prefWidth="259.0" text="Sala" />
+      <ChoiceBox fx:id="RoomsNumberBox" layoutX="320.0" layoutY="213.0" prefHeight="31.0" prefWidth="259.0" />
+   </children>
+</Pane>
