@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" stylesheets="@moj2.css"  minWidth="-Infinity" prefHeight="702.0" prefWidth="1258.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.reservationsystem.RoomsScheduleController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" stylesheets="@UserTableStyle.css"  minWidth="-Infinity" prefHeight="702.0" prefWidth="1258.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.reservationsystem.RoomsScheduleController">
    <children>
       <Button fx:id="cancel" layoutX="465.0" layoutY="638.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="329.0" text="Wróć" />
       <Pane fx:id="allTable" layoutX="31.0" layoutY="75.0" prefHeight="552.0" prefWidth="1197.0" visible="false">

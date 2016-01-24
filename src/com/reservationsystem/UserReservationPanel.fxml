@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.UserReservationPanelContoller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@UserPanelStyle.css" fx:controller="com.reservationsystem.UserReservationPanelContoller">
    <children>
       <DatePicker fx:id="dateBox" layoutX="57.0" layoutY="55.0" prefWidth="174.0" onAction="#onDateChange" />
       <Label layoutX="57.0" layoutY="38.0" prefHeight="17.0" prefWidth="84.0" text="Data rezerwacji:" />

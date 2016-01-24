@@ -303,7 +303,6 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		    MyStatement.setString(4, SubjectColumn.getCellData(index));
 		    MyStatement.setString(5, LecturerColumn.getCellData(index));
 		    
-		    System.out.print(MyStatement);
 			MyStatement.executeUpdate();
 			}
 		private int index;
