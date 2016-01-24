@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.UserReservationPanelContoller">
    <children>
-      <DatePicker fx:id="dateBox" layoutX="57.0" layoutY="55.0" onAction="#onDateChange" />
+      <DatePicker fx:id="dateBox" layoutX="57.0" layoutY="55.0" prefWidth="174.0" onAction="#onDateChange" />
       <Label layoutX="57.0" layoutY="38.0" prefHeight="17.0" prefWidth="84.0" text="Data rezerwacji:" />
       <ChoiceBox fx:id="sizeChoice" layoutX="57.0" layoutY="168.0" prefHeight="25.0" prefWidth="174.0" />
       <Label layoutX="57.0" layoutY="151.0" prefHeight="17.0" prefWidth="84.0" text="Wielkość sali:" />
@@ -19,7 +19,7 @@
       <ChoiceBox fx:id="hourChoice" layoutX="57.0" layoutY="108.0" prefHeight="25.0" prefWidth="174.0" />
       <Label layoutX="57.0" layoutY="91.0" prefHeight="17.0" prefWidth="84.0" text="Godzina:" />
       <Button fx:id="cancel" layoutX="14.0" layoutY="373.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="97.0" text="Wróć" />
-      <Button fx:id="create" layoutX="176.0" layoutY="373.0" mnemonicParsing="false" onAction="#createReservation" prefHeight="25.0" prefWidth="97.0" text="Stwórz" />
+      <Button fx:id="create" layoutX="176.0" layoutY="373.0" mnemonicParsing="false" onAction="#createReservation" prefHeight="25.0" prefWidth="97.0" text="Zapisz" />
       <Label fx:id="studentNotification" layoutX="3.0" layoutY="405.0" prefHeight="42.0" prefWidth="283.0" text="Twoje rezerwacja musi zostać zatwierdzona przez administratora" textAlignment="CENTER" textFill="#cdab22" wrapText="true" />
       <Label fx:id="noRoomsNotification" layoutX="11.0" layoutY="317.0" prefHeight="42.0" prefWidth="267.0" text="Nie ma wolnych sal w danym terminie spełniających kryteria" textAlignment="CENTER" textFill="#f70000" visible="false" wrapText="true" />
       <Label fx:id="reservationSucceed" layoutX="50.0" layoutY="317.0" prefHeight="42.0" prefWidth="183.0" text="Rezerwacja została dodana!" textAlignment="CENTER" textFill="#0bb535" visible="false" wrapText="true">

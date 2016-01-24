@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
@@ -23,15 +23,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException  {
 		Platform.setImplicitExit(false);
-		System.out.println("WERSJA JAVAFX: " + com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 		Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
 		Scene scene = new Scene(root);
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.setTitle("System Rezerwacji Sal");
 		primaryStage.setScene(scene);
 		primaryStage.centerOnScreen();
 		primaryStage.show();
-		//primaryStage.setResizable(false);
 	}
 	
 	
@@ -39,8 +36,6 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	
-	//funkcja do otrzymywania po³¹czenia z baz¹ danych
 	public static Connection getConnection ()
 	{
 		Connection con = null;
@@ -59,31 +54,18 @@ public class Main extends Application {
 			
 			if (e.getErrorCode() == 1045)
 		
-			//System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return null;
 		}
 
 		if (con != null) {
-			//System.out.println("You made it, take control your database now!");
 			return con;
 		    
 		} else {
 			
-			//System.out.println("Failed to make connection!");
-
 		}
 		return null;
 	}
 	
-	public static long hashText (String text)
-	{
-		long hash = 5834;
-		for (int i = 0; i < text.length(); i++) {
-		    hash = hash*179 + text.charAt(i);
-		}
-		System.out.println(hash);
-		return hash;
-	}
 	
 }

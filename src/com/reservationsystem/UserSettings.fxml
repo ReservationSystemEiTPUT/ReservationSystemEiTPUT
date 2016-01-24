@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@moj.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.UserSettingsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity"  minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.UserSettingsController">
    <children>
       <Label layoutX="197.0" layoutY="14.0" prefHeight="34.0" prefWidth="184.0" text="Ustawienia konta" textAlignment="CENTER">
          <font>
@@ -14,7 +14,7 @@
          </font>
       </Label>
       <ProgressIndicator fx:id="progressIndicator" layoutX="251.0" layoutY="110.0" prefHeight="71.0" prefWidth="76.0" />
-      <Pane fx:id="mainPane" layoutX="53.0" layoutY="47.0" prefHeight="324.0" prefWidth="509.0">
+      <Pane fx:id="mainPane" layoutX="53.0" layoutY="47.0" prefHeight="324.0" prefWidth="510.0">
          <children>
             <Label fx:id="mailLabel" layoutX="35.0" layoutY="8.0" prefHeight="25.0" prefWidth="85.0" text="Adres email:">
                <font>
@@ -59,8 +59,8 @@
                   <Label fx:id="toShortPasswordLabel" layoutX="208.0" layoutY="81.0" text="nowe hasło jest za krótkie" textFill="RED" visible="false" />
                </children>
             </Pane>
-            <Button fx:id="cancel" layoutX="30.0" layoutY="287.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="111.0" text="Wróć" />
-            <Button fx:id="applyChanges" layoutX="337.0" layoutY="287.0" mnemonicParsing="false" onAction="#applyChangesAction" prefHeight="25.0" prefWidth="111.0" text="Zatwierdź zmiany" />
+            <Button fx:id="cancel" layoutX="20.0" layoutY="287.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="180.0" text="Wróć" />
+            <Button fx:id="applyChanges" layoutX="310.0" layoutY="287.0" mnemonicParsing="false" onAction="#applyChangesAction" prefHeight="25.0" prefWidth="180.0" text="Zatwierdź zmiany" />
             <CheckBox fx:id="noPhoneNumberCB" layoutX="457.0" layoutY="59.0" mnemonicParsing="false" onAction="#phoneCbAction" text="brak" />
             <Label fx:id="incorrectMailLabel" layoutX="252.0" layoutY="33.0" text="błędny adres email" textFill="RED" visible="false" />
             <Label fx:id="incorrectPhoneLabel" layoutX="252.0" layoutY="80.0" text="błędny nr telefonu" textFill="RED" visible="false" />

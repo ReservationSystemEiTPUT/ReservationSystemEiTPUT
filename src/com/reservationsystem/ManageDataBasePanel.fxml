@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/8" stylesheets="@moj.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.ManageDataBasePanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/8" stylesheets="@AdminPanelStyle.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.ManageDataBasePanelController">
    <children>
       <Button fx:id="Reservations" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#click_delete_reservations_table" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę rezerwacji" />
       <Button fx:id="NewReservations" layoutX="13.0" layoutY="105.0" mnemonicParsing="false" onAction="#click_delete_new_reservations_table" prefHeight="81.0" prefWidth="365.0" text="Wyczyść tablicę oczekujących rezerwacji" />

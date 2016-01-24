@@ -31,6 +31,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -76,7 +78,6 @@ public class DeleteUserPanelController {
 	private int get_count_of_users() throws SQLException {
 		ResultSet Result = AddNewUsersPanelController.get_result_set_for_my_query("SELECT COUNT(*) FROM USERS");
 		Result.next();
-		System.out.print(Result.getInt(1));
 		return Result.getInt(1);
 	}
 
@@ -123,6 +124,7 @@ public class DeleteUserPanelController {
 		}
 	}
     }
+	@SuppressWarnings("unchecked")
 	public void initialize() throws Exception {
 		
 		AskPane1.setVisible(false);
@@ -138,6 +140,7 @@ public class DeleteUserPanelController {
         SetData thread1 = new SetData();
 		thread1.run();
         MyTable.getColumns().addAll(NameColumn, SurnameColumn, LoginColumn,EmailColumn,CheckBoxColumn);
+        MyTable.setPlaceholder(new Label("Brak użytkowników"));
 
 	}	
 	
@@ -197,7 +200,7 @@ public class DeleteUserPanelController {
 	    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("delete from "
 	    		+ "USERS where Login=?");
 	    MyStatement.setString(1, LoginColumn.getCellData(index));
-	    String Update = "drop user " + LoginColumn.getCellData(index);
+	    String Update = "drop user '" + LoginColumn.getCellData(index) + "'";
 	    PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement(Update);
 	    MyStatement.setString(1, LoginColumn.getCellData(index));
 		MyStatement.executeUpdate();
@@ -222,6 +225,7 @@ public class DeleteUserPanelController {
 	}
 	
 	private void ask_what_next() {
+		ProgressPane.setVisible(false);
 		AskPane1.setVisible(true);
 		AskPane2.setVisible(true);
 	}
@@ -251,6 +255,7 @@ public class DeleteUserPanelController {
 		AskPane1.setVisible(false);
 		AskPane2.setVisible(false);
 		DeleteButton.setDisable(false);
+		UndoButton.setDisable(false);
 		MyTable.setVisible(false);
 		Data.clear();
 		SetData thread1 = new SetData();
@@ -260,6 +265,7 @@ public class DeleteUserPanelController {
 	
 	@FXML
 	public void click_on_delete_button () throws Exception {
+		ProgressPane.setVisible(true);
 		GetCountFromUsers thread1 = new GetCountFromUsers();
     	int cout_of_rows = (int) (thread1.call());
 		CheckBox Check; 
@@ -272,6 +278,7 @@ public class DeleteUserPanelController {
 			}
 		}
 		DeleteButton.setDisable(true);
+		UndoButton.setDisable(true);
 		ask_what_next();
 	}
 	
@@ -282,4 +289,10 @@ public class DeleteUserPanelController {
 	public void click_on_undo_button() throws IOException {
 		close();
 	}
+	
+	@FXML
+	ProgressIndicator ProgressBar; 
+	@FXML
+	Pane ProgressPane;
+	
 }

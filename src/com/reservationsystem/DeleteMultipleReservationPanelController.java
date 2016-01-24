@@ -20,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -176,7 +178,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
     		String Even = Result.getString("Even");
     		String Odd = Result.getString("Odd");
     		if (Even.equals("yes") && Odd.equals("yes")){
-    		   Frequency = "Co tydzieÒ";
+    		   Frequency = "Co tydzie√±";
     		}
     		else if (Even.equals("no") && Odd.equals("yes")) {
     			Frequency = "Tygodnie nieparzyste";
@@ -243,6 +245,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
         SetResumeData thread1 = new SetResumeData();
 		thread1.run();
         MyTable.getColumns().addAll(DateColumn, HourColumn,FrequencyColumn, BuildingColumn,RoomsColumn,SubjectColumn,LecturerColumn,YearColumn,GroupColumn);
+        MyTable.setPlaceholder(new Label("Brak rezerwacji"));
 
 	}
 	
@@ -268,7 +271,6 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		    MyStatement.setString(5, SubjectColumn.getCellData(index));
 		    MyStatement.setString(6, LecturerColumn.getCellData(index));
 		    
-		    System.out.print(MyStatement);
 			MyStatement.executeUpdate();
 			con.close();
 			}
@@ -303,7 +305,6 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		    
 		    System.out.print(MyStatement);
 			MyStatement.executeUpdate();
-			con.close();
 			}
 		private int index;
 		private DeleteReservation1(int index) {
@@ -323,6 +324,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		}
 		
 		private void ask_what_next() {
+			ProgressPane.setVisible(false);
 			AskPane1.setVisible(true);
 			AskPane2.setVisible(true);
 			DeleteButton.setDisable(true);
@@ -357,7 +359,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 			DeleteButton.setDisable(false);
 			Resume.setDisable(false);
 			UndoButton.setDisable(false);
-			Resume.setText("Podsumuj");
+			Resume.setText("Rozdziel");
 			MyTable.setVisible(false);
 			Data.clear();
 			SetResumeData thread1 = new SetResumeData();
@@ -367,7 +369,9 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		
 		@FXML
 		public void click_on_delete_button () throws Exception {
+			ProgressPane.setVisible(true);
 			if(Resume.getText().equals("Podsumuj")){
+
 			GetCountFromReservation thread1 = new GetCountFromReservation();
 	    	int cout_of_rows = (int) (thread1.call());
 			CheckBox Check; 
@@ -429,7 +433,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 	        		String Even = Result.getString("Even");
 	        		String Odd = Result.getString("Odd");
 	        		if (Even.equals("yes") && Odd.equals("yes")){
-	        		   Frequency = "Ca tydzieÒ";
+	        		   Frequency = "Co tydzie≈Ñ";
 	        		}
 	        		else if (Even.equals("no") && Odd.equals("yes")) {
 	        			Frequency = "Tygodnie nieparzyste";
@@ -442,8 +446,9 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 	        		String Subject = Result.getString("Subject");
 	        		String Lecturer = Result.getString("Lecturer");
 	        		String Year = Result.getString("Year");
-	        		String Group = Result.getString("Number_of_group");
-
+	        		String Group1 = Result.getString("Number_of_group");
+	        		String Group = (Group1.equals("All")) ? "Ca≈Çy rok" : Group1;
+	        		
 	                Data.add(new DataToTable1(Date1,Hour,Frequency,Building,Room,Subject,Lecturer,Year,Group));
 
 	    		}
@@ -480,13 +485,16 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		
 		@FXML
 		public void click_on_resume_buton() {
+			ProgressPane.setVisible(true);
 			if(Resume.getText().equals("Podsumuj")){
 			MyTable.setVisible(false);
 			Resume.setText("Rozdziel");
 			Data.clear();
 			SetResumeData thread1 = new SetResumeData();
 			thread1.run();
-			MyTable.setVisible(true);}
+			MyTable.setVisible(true);
+			ProgressPane.setVisible(false);
+			}
 			else {
 				Resume.setText("Podsumuj");
 				MyTable.setVisible(false);
@@ -494,6 +502,7 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 				SetData thread1 = new SetData();
 			    thread1.run();
 				MyTable.setVisible(true);
+				ProgressPane.setVisible(false);
 			}
 		}
 		
@@ -501,4 +510,8 @@ public class DeleteMultipleReservationPanelController implements Initializable {
 		public void click_on_undo_button() throws IOException {
 			close();
 		}
+		@FXML
+		ProgressIndicator ProgressBar; 
+		@FXML
+		Pane ProgressPane;
 }

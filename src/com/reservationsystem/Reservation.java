@@ -1,7 +1,5 @@
 package com.reservationsystem;
 
-import java.sql.Date;
-
 public class Reservation {
 	private String date;
 	private String day;

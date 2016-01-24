@@ -27,6 +27,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -73,7 +75,6 @@ public class DeleteSimpleReservationPanelController {
 	private int get_count_of_reservations() throws SQLException {
 		ResultSet Result = AddNewUsersPanelController.get_result_set_for_my_query("SELECT COUNT(*) FROM RESERVATIONS where Type_of_reservation='single'");
 		Result.next();
-		System.out.print(Result.getInt(1));
 		return Result.getInt(1);
 	}
 
@@ -121,6 +122,7 @@ public class DeleteSimpleReservationPanelController {
 		}
 	}
     }
+	@SuppressWarnings("unchecked")
 	public void initialize() throws Exception {
 		
 		AskPane1.setVisible(false);
@@ -137,6 +139,7 @@ public class DeleteSimpleReservationPanelController {
         SetData thread1 = new SetData();
 		thread1.run();
         MyTable.getColumns().addAll(DateColumn, HourColumn, BuildingColumn,RoomsColumn,UserColumn);
+        MyTable.setPlaceholder(new Label("Brak rezerwacji"));
 
 	}
 	
@@ -202,6 +205,19 @@ public class DeleteSimpleReservationPanelController {
 	public class DeleteReservation implements Runnable {
 	private void delete_reservation_from_db(int index) throws SQLException {
 		Connection con = Main.getConnection();
+		PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement("INSERT INTO"
+				+ " DELETE_RESERVATIONS (SELECT * FROM RESERVATIONS WHERE Date=? and Hour=? "
+				+ "and Building=? and Room=? and User=?)");
+		MyStatement1.setString(1, DateColumn.getCellData(index));
+		MyStatement1.setString(2, HourColumn.getCellData(index));
+		MyStatement1.setString(3, BuildingColumn.getCellData(index));
+		MyStatement1.setString(4, RoomsColumn.getCellData(index));
+		MyStatement1.setString(5, UserColumn.getCellData(index));
+		MyStatement1.executeUpdate();
+		MyStatement1.executeUpdate();
+		PreparedStatement MyStatement2 = (PreparedStatement) con.prepareStatement("update DELETE_RESERVATIONS SET SMS='no' "
+				+ "where SMS='yes'");
+		MyStatement2.executeUpdate();
 	    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("delete from "
 	    		+ "RESERVATIONS where Date=? and Hour=? and Building=? and Room=? and User=?");
 	    MyStatement.setString(1, DateColumn.getCellData(index));
@@ -209,8 +225,6 @@ public class DeleteSimpleReservationPanelController {
 	    MyStatement.setString(3, BuildingColumn.getCellData(index));
 	    MyStatement.setString(4, RoomsColumn.getCellData(index));
 	    MyStatement.setString(5, UserColumn.getCellData(index));
-	    
-	    System.out.print(MyStatement);
 		MyStatement.executeUpdate();
 		con.close();
 		}
@@ -232,6 +246,7 @@ public class DeleteSimpleReservationPanelController {
 	}
 	
 	private void ask_what_next() {
+		ProgressPane.setVisible(false);
 		AskPane1.setVisible(true);
 		AskPane2.setVisible(true);
 	}
@@ -271,6 +286,7 @@ public class DeleteSimpleReservationPanelController {
 	
 	@FXML
 	public void click_on_delete_button () throws Exception {
+		ProgressPane.setVisible(true);
 		GetCountFromReservation thread1 = new GetCountFromReservation();
     	int cout_of_rows = (int) (thread1.call());
 		CheckBox Check; 
@@ -294,4 +310,9 @@ public class DeleteSimpleReservationPanelController {
 	public void click_on_undo_button() throws IOException {
 		close();
 	}
+	
+	@FXML
+	ProgressIndicator ProgressBar; 
+	@FXML
+	Pane ProgressPane;
 	}

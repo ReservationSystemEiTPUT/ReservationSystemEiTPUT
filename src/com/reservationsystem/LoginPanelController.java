@@ -1,6 +1,7 @@
 package com.reservationsystem;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -24,10 +25,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 
@@ -46,20 +49,24 @@ public class LoginPanelController implements Initializable{
 	Text incorrectLogin;
 	
 	@FXML
+	Text databaseError;
+	
+	@FXML
 	Button loginButton;
 	
 	boolean isAdmin;
 	
+	@FXML
+	ImageView logoView;
 	
 	
-	//zmienianie sceny po wcisnieciu stworz nowe konto
 	@FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
 	
         Parent create_new_account_page = FXMLLoader.load(getClass().getResource("CreatingAccountPanel.fxml"));
         Scene create_new_account_scene = new Scene(create_new_account_page);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setTitle("Tworzenie nowego konta");
+        app_stage.setTitle("Rejestracja konta użytkownika");
         app_stage.setScene(create_new_account_scene);
         app_stage.centerOnScreen();
         app_stage.show();
@@ -70,6 +77,7 @@ public class LoginPanelController implements Initializable{
 
 	public void loginButton() {
         incorrectLogin.setVisible(false);
+        databaseError.setVisible(false);
 	    loadingBar.setVisible(true);
 	    databaseAccess thread1 = new databaseAccess();
 	    (new Thread(thread1)).start();
@@ -86,13 +94,10 @@ public class LoginPanelController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		isAdmin=false;
+	    incorrectLogin.setStyle("-fx-font-weight: 500;");
+        Image image = new Image(this.getClass().getResourceAsStream("logoput.jpg"));
+        logoView.setImage(image);
 	}
-	/*
-	public class checkPrivilages()
-	
-	
-	
-	*/
 	
 	public boolean isAdmin() throws SQLException {
 		
@@ -148,8 +153,9 @@ public class LoginPanelController implements Initializable{
 				
 				if (e.getErrorCode() == 1045)
 					incorrectLogin.setVisible(true);
+				else 
+					databaseError.setVisible(true);
 			
-				System.out.println("Connection Failed! Check output console");
 				e.printStackTrace();
 				return;
 			}
@@ -174,15 +180,14 @@ public class LoginPanelController implements Initializable{
 			    
 			} else {
 				
-				System.out.println("Failed to make connection!");
 
 			}
 			
 			
 		}
 	}
-	//zmienianie sceny je¿eli login poprawny
-	 public void loginCorrect(boolean admin)
+
+	public void loginCorrect(boolean admin)
 	 {
 	    Platform.runLater(new Runnable() {
 	      @Override public void run() {
@@ -200,57 +205,12 @@ public class LoginPanelController implements Initializable{
 			}
 	          Scene logged_page_scene = new Scene(logged_page);
 	          Stage app_stage = (Stage) loadingBar.getScene().getWindow();
-	          //logged_page_scene.getStylesheets().add("moj.css");
 	          app_stage.setScene(logged_page_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();
-	          
-	          
 	      }
 	    });
 	  }
 	 
-	 
-	 public static Connection getConnection () throws SQLException
-		{
-		 String login ="";
-		 String password="";
-		 
-		 
-			Connection con = null;
-		    try {
-				Class.forName("com.mysql.jdbc.Driver");
-				
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				con = DriverManager
-				.getConnection("jdbc:mysql://SERVER_IP_ADDRESS/ROOMS_RESERVATION",login,password);
-			} catch (SQLException e) {
-				
-				System.out.println("Connection Failed!");
-				e.printStackTrace();
-			}
-
-			if (con != null) {
-				System.out.println("Connected to Database!");
-			    
-			} else {
-				System.out.println("Failed to make connection!");
-			}
-			
-			Statement myStatement = (Statement) con.createStatement();
-			ResultSet rs = myStatement.executeQuery("SELECT * FROM ROOMS;");
-			
-			while (rs.next()) { // przechodzenie o wierszach
-				 String building = rs.getString("Building");
-				 System.out.println(building);
-				}
-			
-			
-			return null;
-		}
-		
+	
 }

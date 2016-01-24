@@ -4,18 +4,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="967.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AddNewUsersPanelController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@AdminPanelStyle.css"  prefHeight="529.0" prefWidth="967.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AddNewUsersPanelController">
    <content>
       <GridPane prefHeight="522.0" prefWidth="963.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="467.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="245.0" minHeight="0.0" prefHeight="55.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="445.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="245.0" minHeight="0.0" prefHeight="77.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="MyTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="MyTable1" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="CheckBoxColumn" prefWidth="75.0" />
                 <TableColumn fx:id="NameColumn" prefWidth="178.0" text="Imię" />
@@ -30,16 +30,16 @@
                      <children>
                         <Button fx:id="YesButton" layoutX="87.0" layoutY="198.0" mnemonicParsing="false" onAction="#say_yes_button" prefHeight="69.0" prefWidth="131.0" text="Tak" />
                         <Button fx:id="NoButton" layoutX="324.0" layoutY="198.0" mnemonicParsing="false" onAction="#say_no_button" prefHeight="69.0" prefWidth="131.0" text="Nie" />
-                        <Label layoutX="162.0" layoutY="75.0" text="Czy chcesz usunąć/dodać kolejnych użytkowników?" />
+                        <Label fx:id="MyLabel" layoutX="150" layoutY="75.0" text="Czy chcesz usunąć/dodać kolejnych użytkowników?" />
                      </children>
                   </Pane>
                </children>
             </Pane>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="DeleteButton" mnemonicParsing="false" onAction="#click_on_delete_button" prefHeight="69.0" prefWidth="486.0" text="Usuń" />
-                  <Button fx:id="AddButton" mnemonicParsing="false" onAction="#click_on_add_button" prefHeight="55.0" prefWidth="498.0" text="Dodaj" />
-                  <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#click_on_undo_button" prefHeight="68.0" prefWidth="478.0" text="Wróć" />
+                  <Button fx:id="DeleteButton" mnemonicParsing="false" onAction="#click_on_delete_button" prefHeight="78.0" prefWidth="478.0" text="Usuń" />
+                  <Button fx:id="AddButton" mnemonicParsing="false" onAction="#click_on_add_button" prefHeight="78.0" prefWidth="478.0" text="Dodaj" />
+                  <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#click_on_undo_button" prefHeight="78.0" prefWidth="478.0" text="Wróć" />
                </children>
             </HBox>
          </children>

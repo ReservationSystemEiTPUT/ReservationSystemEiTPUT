@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.concurrent.Callable;
 
 import com.mysql.jdbc.PreparedStatement;
+import com.reservationsystem.AddNewUsersReservationPanelController.WhatID;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,19 +31,17 @@ public class SingleReservationAdminController {
 	
 	@FXML
 	ObservableList<String> BuildingList = FXCollections
-	.observableArrayList("CW","BM","WE","Mch","Polanka");		
+	.observableArrayList("CW","BM","WE","Mch","Polanka");
+	String BuildingTable[] = {"CW","BM","WE","Mch","Polanka"};
+	String HoursTable[] = {"8:00-9:30","9:45-11:15","11:45-13:15","13:30-15:00","15:15-16:45","17:00-18:30","18:45-20:00"};
 	@FXML
 	ObservableList<String> RoomsList = FXCollections
 			.observableArrayList();
 	@FXML
-	ObservableList<String> SizeList = FXCollections
-			.observableArrayList( "Do 15 osób", "Do 30 osób", "Powyżej 30 osób", "Wykładowa");
-	@FXML
-	private ChoiceBox <String> SizeBox;
-	@FXML
 	private ChoiceBox <String> BuildingBox;	
 	ObservableList<String> HoursList = FXCollections
 			.observableArrayList("8:00-9:30","9:45-11:15","11:45-13:15","13:30-15:00","15:15-16:45","17:00-18:30","18:45-20:00");
+	
 	@FXML
 	private ChoiceBox <String> HoursBox;
 	@FXML
@@ -82,50 +81,75 @@ public class SingleReservationAdminController {
 	                    }
 	                };
 	            }
-	        };
-	        SizeBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+	        }; 
+	        BuildingBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 					RoomsNumberBox.setDisable(false);
-					if (check_if_fields_are_not_null()) {
-					    PrepareStatementToGetRooms thread1 = new PrepareStatementToGetRooms();
-						ResultSet MyResult;
-						try {
-							MyResult = thread1.call();
-							ObservableList<String> MyList;
-							MyList = return_list_of_room_numbers(MyResult);
-							set_rooms_numbers(MyList);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
+					PrepareStatementToGetRooms thread1 = new PrepareStatementToGetRooms(BuildingTable[newValue.intValue()]);
+					ResultSet MyResult;
+					try {
+						MyResult = thread1.call();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					
+					try {
+						MyResult = thread1.call();
+						ObservableList<String> MyList;
+						MyList = return_list_of_room_numbers(MyResult);
+						set_rooms_numbers(MyList);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+			});  
+	        HoursBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					RoomsNumberBox.setDisable(false);
+					PrepareStatementToGetRooms thread1 = new PrepareStatementToGetRooms(BuildingTable[newValue.intValue()]);
+					ResultSet MyResult;
+					try {
+						MyResult = thread1.call();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						MyResult = thread1.call();
+						ObservableList<String> MyList;
+						MyList = return_list_of_room_numbers(MyResult);
+						set_rooms_numbers(MyList);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
 			}); 
 	        
 	        DateBox.setDayCellFactory(dayCellFactory);
 	        RoomsNumberBox.setValue(null);
 	        BuildingBox.setValue(null);
-	        SizeBox.setValue(null);
 	        HoursBox.setValue(null);
 			HoursBox.setItems(HoursList);
 			BuildingBox.setItems(BuildingList);
-			SizeBox.setItems(SizeList);
 
 	}
 	
 	
 	private boolean check_if_fields_are_not_null() {
-		return (HoursBox.getValue()==null || SizeBox.getValue()==null || 
+		return (HoursBox.getValue()==null || 
 				BuildingBox.getValue()==null || DateBox.getValue()==null) ? false : true;
 	}
 	
 	private boolean check_if_fields_are_not_null1() {
 		
-		return (HoursBox.getValue()==null || SizeBox.getValue()==null || 
+		return (HoursBox.getValue()==null || 
 				BuildingBox.getValue()==null || DateBox.getValue()==null 
 				|| RoomsNumberBox.getValue()==null) ? false : true;
 	}
@@ -153,34 +177,27 @@ public class SingleReservationAdminController {
 		RoomsNumberBox.setVisible(true);
 	}
 
-	private String read_size_value() {
-		
-		
-		String SizeBoxValue = SizeBox.getValue();
-		if (SizeBoxValue == "Do 15 osób") return "15";
-		if (SizeBoxValue == "Do 30 osób") return "30";
-		if (SizeBoxValue == "Powyżej 30 osób") return "50";
-		return "150";
-	}
 	
 	private class PrepareStatementToGetRooms implements Callable <ResultSet>{
+	String BuildingBox;
 	private ResultSet prepare_statement_to_get_rooms () throws SQLException
 	{
 		Connection NewConnection = Main.getConnection();
 		PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection
-				.prepareStatement("select Number from ROOMS where Building = ? and Size = ? "
+				.prepareStatement("select Number from ROOMS where Building = ? "
 						+ "and Number not in (select Room from RESERVATIONS where "
 						+ "Date = ? and Hour = ?)");
-		NewPreparedStatement.setString(1, BuildingBox.getValue());
-		NewPreparedStatement.setString(2, read_size_value());
-		NewPreparedStatement.setString(3, DateBox.getValue().toString());
-		NewPreparedStatement.setString(4, HoursBox.getValue());
-
+		NewPreparedStatement.setString(1, BuildingBox);
+		NewPreparedStatement.setString(2, DateBox.getValue().toString());
+		NewPreparedStatement.setString(3, HoursBox.getValue());
 		ResultSet NewResult = NewPreparedStatement.executeQuery();
 		return NewResult;
 		
 	}
-
+	private PrepareStatementToGetRooms(String b) 
+	{
+		this.BuildingBox=b; 
+	}
 	@Override
 	public ResultSet call() throws Exception {
 		// TODO Auto-generated method stub
@@ -203,16 +220,45 @@ public class SingleReservationAdminController {
 		RoomsNumberBox.setItems(ListOfRooms);
 	}
 	
+	public class WhatID implements Callable {
+
+		private String return_id() throws SQLException {
+			Connection NewConnection = Main.getConnection();
+			PreparedStatement MyStatement2 = (PreparedStatement) NewConnection
+					.prepareStatement("select COUNT(*) FROM RESERVATIONS");
+			ResultSet MyResult2 = MyStatement2.executeQuery();
+			MyResult2.next();
+			int isEmpty = MyResult2.getInt(1);
+			if(isEmpty==0) { return Integer.toString(1);}
+			PreparedStatement MyStatement = (PreparedStatement) NewConnection
+					.prepareStatement("select id from RESERVATIONS ORDER BY ID DESC LIMIT 1");
+			ResultSet MyResult = MyStatement.executeQuery();
+			MyResult.next();
+
+			int result = MyResult.getInt(1);
+			return Integer.toString(result + 1);
+		}
+		
+		@Override
+		public Object call() throws Exception {
+			// TODO Auto-generated method stub
+			return return_id();
+		}
+		
+	}
 	private class PrepareStatementToAddReservation implements Runnable {
-	private void prepare_statement_to_add_reservation() throws SQLException {
+	private void prepare_statement_to_add_reservation() throws Exception {
 		Connection NewConnection = Main.getConnection();
+		WhatID thread1 = new WhatID();
+		String id = (String) thread1.call();
 		PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection
-				.prepareStatement("insert into RESERVATIONS value (?,?,?,'no','no',?,?,'single','no','no','no','no','Admin','no');");
-		NewPreparedStatement.setString(1, DateBox.getValue().toString());
-		NewPreparedStatement.setString(2, HoursBox.getValue());
-		NewPreparedStatement.setString(3, DateBox.getValue().getDayOfWeek().toString());
-		NewPreparedStatement.setString(4, RoomsNumberBox.getValue());
-		NewPreparedStatement.setString(5, BuildingBox.getValue());
+				.prepareStatement("insert into RESERVATIONS value (?,?,?,?,'no','no',?,?,'single','no','no','no','no','Admin','yes');");
+		NewPreparedStatement.setString(1, id);
+		NewPreparedStatement.setString(2, DateBox.getValue().toString());
+		NewPreparedStatement.setString(3, HoursBox.getValue());
+		NewPreparedStatement.setString(4, DateBox.getValue().getDayOfWeek().toString());
+		NewPreparedStatement.setString(5, RoomsNumberBox.getValue());
+		NewPreparedStatement.setString(6, BuildingBox.getValue());
 
 		NewPreparedStatement.execute();
 		//NewConnection.close();
@@ -224,6 +270,9 @@ public class SingleReservationAdminController {
 		try {
 			prepare_statement_to_add_reservation();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -240,29 +289,15 @@ public class SingleReservationAdminController {
 		RoomsNumberBox.setVisible(false);
 	}
 	
-	private void say_reservation_exist() {
-		LabelField.setText("Rezerwacja o podanych parametrach już istnieje");
-		MyPane.setVisible(true);
-		OkButton.setVisible(true);
-		AddButton.setDisable(true);
-		UndoButton.setDisable(true);
-		RoomsNumberBox.setVisible(true);
-
-	}
 	
     @FXML
     private void click_add_button() throws SQLException {
     	if (check_if_fields_are_not_null1()) {   
-    		CheckReservation thread1 = new CheckReservation();
-    		int exist = (int) thread1.call();
-    		if(exist == 0){
+  
     		PrepareStatementToAddReservation thread2 = new PrepareStatementToAddReservation();
     		thread2.run();
     		propose_new_reservation();
-    		}
-    		else {
-    			say_reservation_exist();
-    		}
+    		
     	}
     	
     	else
@@ -278,10 +313,11 @@ public class SingleReservationAdminController {
     	NoButton.setVisible(false);
     	DateBox.setValue(null);
     	BuildingBox.setValue(null);
-    	SizeBox.setValue(null);
     	RoomsNumberBox.setValue(null);
     	AddButton.setDisable(false);
 		UndoButton.setDisable(false);
+		RoomsNumberBox.setVisible(true);
+
     	initialize();
     }
     

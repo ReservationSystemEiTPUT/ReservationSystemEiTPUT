@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#click_on_double_reservation" prefHeight="702.0" prefWidth="601.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.MultipleReservationPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#click_on_double_reservation" prefHeight="702.0" prefWidth="601.0" stylesheets="@AdminPanelStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.MultipleReservationPanelController">
    <children>
       <ChoiceBox fx:id="FrequencyBox" layoutX="320.0" layoutY="34.0" prefHeight="31.0" prefWidth="259.0" />
       <DatePicker fx:id="DateBox" layoutX="320.0" layoutY="81.0" prefHeight="31.0" prefWidth="259.0" />

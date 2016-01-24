@@ -4,24 +4,29 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.DeleteUserPanelController">
-   <content>
+<Pane stylesheets="@AdminPanelStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.DeleteUserPanelController">
+   <children>
+      <Pane fx:id="ProgressPane" prefHeight="522.0" prefWidth="963.0" visible="false">
+         <children>
+            <ProgressIndicator fx:id="ProgressBar" layoutX="359.0" layoutY="130.0" prefHeight="247.0" prefWidth="252.0" progress="0.0" />
+         </children>
+      </Pane>
       <GridPane prefHeight="522.0" prefWidth="963.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="467.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="245.0" minHeight="0.0" prefHeight="55.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="522.0" minHeight="10.0" prefHeight="452.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="245.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="MyTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="MyTable" prefHeight="467.0" prefWidth="932.0">
               <columns>
                 <TableColumn fx:id="CheckBoxColumn" prefWidth="75.0" />
                 <TableColumn fx:id="NameColumn" prefWidth="178.0" text="Imię" />
                   <TableColumn fx:id="SurnameColumn" prefWidth="233.0" text="Nazwisko" />
                   <TableColumn fx:id="LoginColumn" prefWidth="201.0" text="Login" />
-                  <TableColumn fx:id="EmailColumn" prefWidth="275.0" text="Email" />
+                  <TableColumn fx:id="EmailColumn" prefWidth="258.0" text="Email" />
               </columns>
             </TableView>
             <Pane fx:id="AskPane1" prefHeight="323.0" prefWidth="687.0" visible="false">
@@ -30,7 +35,7 @@
                      <children>
                         <Button fx:id="YesButton" layoutX="87.0" layoutY="198.0" mnemonicParsing="false" onAction="#say_yes_button" prefHeight="69.0" prefWidth="131.0" text="Tak" />
                         <Button fx:id="NoButton" layoutX="324.0" layoutY="198.0" mnemonicParsing="false" onAction="#say_no_button" prefHeight="69.0" prefWidth="131.0" text="Nie" />
-                        <Label layoutX="162.0" layoutY="75.0" text="Czy chcesz usunąć kolejne rzeczy?" />
+                        <Label layoutX="130.0" layoutY="75.0" text="Czy chcesz usunąć kolejnych użytkowników?" />
                      </children>
                   </Pane>
                </children>
@@ -43,5 +48,5 @@
             </HBox>
          </children>
       </GridPane>
-   </content>
-</ScrollPane>
+   </children>
+</Pane>

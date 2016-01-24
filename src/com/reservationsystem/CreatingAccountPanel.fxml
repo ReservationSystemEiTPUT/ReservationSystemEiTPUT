@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.CreatingAccountPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@moj.css" fx:controller="com.reservationsystem.CreatingAccountPanelController">
    <children>
       <Label layoutX="28.0" layoutY="37.0" prefHeight="17.0" prefWidth="126.0" text="Imię" />
       <Label layoutX="28.0" layoutY="84.0" prefHeight="17.0" prefWidth="126.0" text="Nazwisko" />
@@ -14,24 +14,24 @@
       <Label layoutX="28.0" layoutY="251.0" prefHeight="17.0" prefWidth="126.0" text="Powtórz hasło" />
       <Label layoutX="28.0" layoutY="296.0" prefHeight="17.0" prefWidth="126.0" text="Adres e-mail" />
       <Label fx:id="phoneNumberLabel" layoutX="28.0" layoutY="373.0" prefHeight="17.0" prefWidth="126.0" text="Nr telefonu" visible="false" />
-      <Button fx:id="createButton" layoutX="31.0" layoutY="492.0" mnemonicParsing="false" onAction="#createAccount" text="Stwórz konto" />
-      <Button fx:id="cancelButton" layoutX="244.0" layoutY="492.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="86.0" text="Anuluj" />
+      <Button fx:id="createButton" layoutX="30.0" layoutY="492.0" mnemonicParsing="false" onAction="#createAccount" text="Załóż konto" prefHeight="25.0" prefWidth="140.0"  />
+      <Button fx:id="cancelButton" layoutX="188.0" layoutY="492.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="140.0" text="Anuluj" />
       <TextField id="name" fx:id="nameField" layoutX="116.0" layoutY="33.0" prefHeight="25.0" prefWidth="197.0" />
       <TextField id="surname" fx:id="surnameField" layoutX="116.0" layoutY="80.0" prefHeight="25.0" prefWidth="197.0" />
       <TextField id="indexNumber" fx:id="indexNo" layoutX="116.0" layoutY="157.0" prefHeight="25.0" prefWidth="197.0" />
       <PasswordField id="password" fx:id="passwordField" layoutX="116.0" layoutY="200.0" prefHeight="25.0" prefWidth="197.0" />
       <PasswordField id="rePassword" fx:id="rePasswordField" layoutX="116.0" layoutY="247.0" onKeyReleased="#checkPasswords" prefHeight="25.0" prefWidth="197.0" />
       <TextField id="mailAddress" fx:id="mailField" layoutX="116.0" layoutY="292.0" prefHeight="25.0" prefWidth="197.0" promptText="mail@example.com" />
-      <TextField id="phoneNo" fx:id="phoneNumberField" layoutX="116.0" layoutY="369.0" prefHeight="25.0" prefWidth="197.0" promptText="123123123" visible="false" />
+      <TextField id="phoneNo" fx:id="phoneNumberField" layoutX="116.0" layoutY="369.0" prefHeight="25.0" prefWidth="197.0" promptText="601601601" visible="false" />
       <CheckBox fx:id="phoneNumberCheckbox" layoutX="31.0" layoutY="337.0" mnemonicParsing="false" onAction="#setPhoneNumber" prefHeight="17.0" prefWidth="283.0" text="powiadomienia SMS" />
       <Label fx:id="samePasswordLabel" layoutX="141.0" layoutY="272.0" text="hasła muszą być identyczne" textFill="#e42727" visible="false" />
       <Label fx:id="passwordLengthLabel" layoutX="154.0" layoutY="225.0" text="min. długość 8 znaków" textFill="#e4a11a" />
       <Label fx:id="studentNotification" layoutX="39.0" layoutY="443.0" prefHeight="42.0" prefWidth="283.0" text="Twoje konto musi zostać zatwierdzone przez administratora, jako login zostanie użyty nr indeksu" textAlignment="CENTER" textFill="#cdab22" wrapText="true" />
       <CheckBox fx:id="employeeCheckbox" layoutX="28.0" layoutY="119.0" mnemonicParsing="false" onAction="#registerEmployee" prefHeight="17.0" prefWidth="283.0" text="pracownik PUT" />
       <Label fx:id="employeeNotification" layoutX="38.0" layoutY="401.0" prefHeight="42.0" prefWidth="283.0" text="Twoje konto musi zostać zatwierdzone przez administratora, login będzie postaci imie.nazwisko" textAlignment="CENTER" textFill="#cdab22" visible="false" wrapText="true" />
-      <Label id="fillAllFields" fx:id="fillAllFields" layoutX="102.0" layoutY="401.0" prefHeight="42.0" prefWidth="158.0" text="Uzupełnij wszystkie pola!" textAlignment="CENTER" textFill="#cc2e23" visible="false" wrapText="true">
+      <Label id="fillAllFields" fx:id="fillAllFields" layoutX="90.0" layoutY="401.0"  text="Uzupełnij wszystkie pola!" textAlignment="CENTER" textFill="#cc2e23" visible="false" wrapText="true">
          <font>
-            <Font size="14.0" />
+            <Font size="17.0" />
          </font>
       </Label>
       <Label id="incorrectMail" fx:id="incorrectMailLabel" layoutX="161.0" layoutY="317.0" text="błędny adres mail" textFill="RED" visible="false" />
@@ -39,12 +39,12 @@
       <Label id="incorrectPhoneNumber" fx:id="incorrectIndexNumberLabel" layoutX="160.0" layoutY="182.0" text="błędny nr indeksu" textFill="RED" visible="false" />
       <Label fx:id="incorrectPasswordLabel" layoutX="115.0" layoutY="225.0" text="popraw hasło, min. długość 8 znaków" textFill="RED" visible="false" />
       <Label fx:id="connectionFailedLabel" layoutX="29.0" layoutY="505.0" prefHeight="42.0" prefWidth="304.0" text="Nie można połączyć się z bazą danych, spróbuj ponownie" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
-      <Label fx:id="accounCreatedSuccessful" layoutX="8.0" layoutY="530.0" prefHeight="62.0" prefWidth="339.0" text="TWOJE KONTO ZOSTAŁO STWORZONE" textAlignment="CENTER" textFill="#13c62b" visible="false" wrapText="true">
+      <Label fx:id="accounCreatedSuccessful" layoutX="11.0" layoutY="530.0" prefHeight="62.0" prefWidth="339.0"  text="TWOJE KONTO ZOSTAŁO ZAREJESTROWANE" textAlignment="CENTER" textFill="#13c62b" visible="false" wrapText="true">
          <font>
-            <Font size="14.0" />
+            <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="indexRegistered" layoutX="83.0" layoutY="505.0" prefHeight="42.0" prefWidth="197.0" text="Podany login już jest zarejestrowany" textAlignment="CENTER" textFill="#f50400" visible="false" wrapText="true" />
+      <Label fx:id="indexRegistered" layoutX="83.0" layoutY="515.0" prefHeight="42.0" prefWidth="197.0" text="Podany login już jest zarejestrowany" textAlignment="CENTER" textFill="#f50400" visible="false" wrapText="true" />
       <Label fx:id="phoneRegistered" layoutX="63.0" layoutY="526.0" prefHeight="42.0" prefWidth="238.0" text="Podany nr telefonu już jest zarejestrowany" textAlignment="CENTER" textFill="#f50400" visible="false" wrapText="true" />
       <Label fx:id="mailRegistered" layoutX="60.0" layoutY="547.0" prefHeight="42.0" prefWidth="238.0" text="Podany adres e-mail już jest zarejestrowany" textAlignment="CENTER" textFill="#f50400" visible="false" wrapText="true" />
    </children>

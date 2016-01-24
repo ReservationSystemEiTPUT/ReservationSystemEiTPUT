@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,13 +28,14 @@ public class UserPanelController implements Initializable{
 		// TODO Auto-generated method stub
 		welcomeLabel.setText("Witaj " + Main.name + "!");
 		
+		
 	}
 	
 	@FXML
     private void handleNewReservationButton(ActionEvent event) throws IOException {
 	
-        System.out.println("You clicked me!");
-        Parent create_new_account_page = FXMLLoader.load(getClass().getResource("UserReservationPanel.fxml"));
+
+		Parent create_new_account_page = FXMLLoader.load(getClass().getResource("UserReservationPanel.fxml"));
         Scene create_new_account_scene = new Scene(create_new_account_page);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setTitle("Nowa rezerwacja");

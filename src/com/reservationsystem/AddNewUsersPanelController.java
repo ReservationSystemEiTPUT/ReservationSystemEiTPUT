@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,7 +40,7 @@ public class AddNewUsersPanelController {
 		NewPreparedStatement.executeUpdate();
 	}
 	@FXML
-    private TableView<DataToTable> MyTable = new TableView<DataToTable>();
+    private TableView<DataToTable> MyTable1 = new TableView<DataToTable>();
     private final ObservableList<DataToTable> Data =
         FXCollections.observableArrayList(); 
 
@@ -71,7 +72,6 @@ public class AddNewUsersPanelController {
 	private int get_count_of_users() throws SQLException {
 		ResultSet Result = get_result_set_for_my_query("SELECT COUNT(*) FROM NEW_USERS");
 		Result.next();
-		System.out.print(Result.getInt(1));
 		return Result.getInt(1);
 	}
 
@@ -102,7 +102,7 @@ public class AddNewUsersPanelController {
 		for (int i = 0 ; i < cout_of_rows; i++){
 		give_data_from_users_to_table(Result);
 		}
-        MyTable.setItems(Data);
+        MyTable1.setItems(Data);
         
     }
 
@@ -132,7 +132,8 @@ public class AddNewUsersPanelController {
         
         SetData thread1 = new SetData();
 		thread1.run();
-        MyTable.getColumns().addAll(NameColumn, SurnameColumn, LoginColumn,EmailColumn,CheckBoxColumn);
+        MyTable1.getColumns().addAll(NameColumn, SurnameColumn, LoginColumn,EmailColumn,CheckBoxColumn);
+        MyTable1.setPlaceholder(new Label("Brak u¿ytkowników"));
 
 	}	
 	
@@ -213,15 +214,33 @@ public class AddNewUsersPanelController {
 		}
 	}
 	}
-	
+	@FXML 
+	Label MyLabel;
 	public class AddUser implements Runnable {
+		private int check_login(int index) throws SQLException {
+			Connection con = Main.getConnection();
+		    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("select COUNT(*) from USERS where "
+		    		+ "Login=?");
+		    MyStatement.setString(1, LoginColumn.getCellData(index));
+			ResultSet Result = MyStatement.executeQuery();
+			Result.next();
+			return Result.getInt(1);
+		}
 		private void insert_user_from_db(int index) throws SQLException {
+			int checkLogin = check_login(index);
+			if(checkLogin==0){
 			Connection con = Main.getConnection();
 		    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into USERS select * FROM "
 		    		+ "NEW_USERS d where Login=?");
 		    MyStatement.setString(1, LoginColumn.getCellData(index));
 			MyStatement.executeUpdate();
 			con.close();
+			}
+			else
+			{
+				MyLabel.setText("Login zajêty! Czey chcesz wróciæ do wszystkich kont?");
+				ask_what_next();
+			}
 			}
 		private int index;
 		private AddUser(int index) {
@@ -268,11 +287,15 @@ public class AddNewUsersPanelController {
 		    MyStatement4.setString(1, Login);
 		    PreparedStatement MyStatement5 = (PreparedStatement) con.prepareStatement("GRANT SELECT, INSERT ON users_reservations TO ?@'%'");
 		    MyStatement5.setString(1, Login);
+		    PreparedStatement MyStatement6 = (PreparedStatement) con.prepareStatement("GRANT SELECT, INSERT ON users_deleted_reservations TO ?@'%'");
+		    MyStatement6.setString(1, Login);
 		    MyStatement.executeUpdate();
 		    MyStatement2.executeUpdate();
 		    MyStatement3.executeUpdate();
 		    MyStatement4.executeUpdate();		    
 		    MyStatement5.executeUpdate();
+		    MyStatement6.executeUpdate();
+
 			con.close();
 			}
 		private int index;
@@ -324,11 +347,11 @@ public class AddNewUsersPanelController {
 		DeleteButton.setDisable(false);
 		UndoButton.setDisable(false);
 		AddButton.setDisable(false);
-		MyTable.setVisible(false);
+		MyTable1.setVisible(false);
 		Data.clear();
 		SetData thread1 = new SetData();
 	    thread1.run();
-		MyTable.setVisible(true);
+		MyTable1.setVisible(true);
 	}
 	
 	@FXML
@@ -347,6 +370,7 @@ public class AddNewUsersPanelController {
 		DeleteButton.setDisable(true);
 		AddButton.setDisable(true);
 		UndoButton.setDisable(true);
+		MyLabel.setText("Czy chcesz dodaæ/usun¹æ kolejne konta?");
 		ask_what_next();
 	}
 	
@@ -370,6 +394,7 @@ public class AddNewUsersPanelController {
 		DeleteButton.setDisable(true);
 		AddButton.setDisable(true);
 		UndoButton.setDisable(true);
+		MyLabel.setText("Czy chcesz dodaæ/usun¹æ kolejne konta?");
 		ask_what_next();
 	}	
 	

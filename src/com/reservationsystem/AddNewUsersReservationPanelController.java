@@ -41,7 +41,7 @@ import javafx.scene.Group;
 
 public class AddNewUsersReservationPanelController {
 	@FXML
-    private TableView<DataToTable> MyTable = new TableView<DataToTable>();
+    private TableView<DataToTable> MyTable1 = new TableView<DataToTable>();
     private final ObservableList<DataToTable> Data =
         FXCollections.observableArrayList(); 
 
@@ -106,7 +106,7 @@ public class AddNewUsersReservationPanelController {
 		for (int i = 0 ; i < cout_of_rows; i++){
 		give_data_from_reservation_to_table(Result);
 		}
-        MyTable.setItems(Data);
+        MyTable1.setItems(Data);
         
     }
 
@@ -126,7 +126,11 @@ public class AddNewUsersReservationPanelController {
 		
 		AskPane1.setVisible(false);
 		AskPane2.setVisible(false);
+		AskPane3.setVisible(false);
+
 		AskPane2.setStyle("-fx-background-color: white;");
+		AskPane3.setStyle("-fx-background-color: white;");
+
         DateColumn.setCellValueFactory(new PropertyValueFactory<DataToTable,String>("DateValue"));
         HourColumn.setCellValueFactory(new PropertyValueFactory<DataToTable,String>("HourValue"));
         BuildingColumn.setCellValueFactory(new PropertyValueFactory<DataToTable,String>("BuildingValue"));
@@ -137,8 +141,8 @@ public class AddNewUsersReservationPanelController {
         
         SetData thread1 = new SetData();
 		thread1.run();
-        MyTable.getColumns().addAll(DateColumn, HourColumn, BuildingColumn,RoomsColumn,UserColumn);
-
+        MyTable1.getColumns().addAll(DateColumn, HourColumn, BuildingColumn,RoomsColumn,UserColumn);
+        MyTable1.setPlaceholder(new Label("Brak rezerwacji"));
 	}
 	
 	public static class DataToTable {
@@ -201,8 +205,23 @@ public class AddNewUsersReservationPanelController {
 	Pane AskPane2;
 	
 	public class DeleteReservation implements Runnable {
-	private void delete_reservation_from_db(int index) throws SQLException {
+	private void delete_reservation_from_db(int index) throws Exception {
+		WhatID thread1 = new WhatID();
+		String id = (String) thread1.call();
 		Connection con = Main.getConnection();
+		PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement("insert into DELETE_RESERVATIONS value "
+				+ "(?,?,?,?,'no','no',?,?,'single','no','no','no','no',?,'no')");
+		MyStatement1.setString(1, id);
+		MyStatement1.setString(2, DateColumn.getCellData(index));
+		MyStatement1.setString(3, HourColumn.getCellData(index));
+	    LocalDate Day = LocalDate.parse(DateColumn.getCellData(index));
+	    DayOfWeek Day1 = Day.getDayOfWeek();
+	    MyStatement1.setString(4, Day1.toString());
+		MyStatement1.setString(6, BuildingColumn.getCellData(index));
+		MyStatement1.setString(5, RoomsColumn.getCellData(index));
+		MyStatement1.setString(7, UserColumn.getCellData(index));
+		MyStatement1.executeUpdate();
+		MyStatement1.executeUpdate();
 	    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("delete from "
 	    		+ "NEW_RESERVATIONS where Date=? and Hour=? and Building=? and Room=? and User=?");
 	    MyStatement.setString(1, DateColumn.getCellData(index));
@@ -224,30 +243,51 @@ public class AddNewUsersReservationPanelController {
 		// TODO Auto-generated method stub
 		try {
 			delete_reservation_from_db(index);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	}
 	
-	public class AddReservation implements Runnable {
-	private void insert_reservation(int index) throws SQLException {
-		Connection NewConnection = Main.getConnection();
-		PreparedStatement MyStatement = (PreparedStatement) NewConnection
-				.prepareStatement("insert into RESERVATIONS value (?,?,?,'no','no',?,?,'single','no','no','no','no',?,'no');");
+	public class WhatID implements Callable {
 
-	    MyStatement.setString(1, DateColumn.getCellData(index));
-	    MyStatement.setString(2, HourColumn.getCellData(index));
+		private String return_id() throws SQLException {
+			Connection NewConnection = Main.getConnection();
+			PreparedStatement MyStatement = (PreparedStatement) NewConnection
+					.prepareStatement("select id from RESERVATIONS ORDER BY ID DESC LIMIT 1");
+			ResultSet MyResult = MyStatement.executeQuery();
+			MyResult.next();
+			int result = MyResult.getInt(1);
+			return Integer.toString(result + 1);
+		}
+		
+		@Override
+		public Object call() throws Exception {
+			// TODO Auto-generated method stub
+			return return_id();
+		}
+		
+	}
+	
+	public class AddReservation implements Runnable {
+	private void insert_reservation(int index) throws Exception {
+		Connection NewConnection = Main.getConnection();
+		WhatID thread1 = new WhatID();
+		String id = (String) thread1.call();
+		PreparedStatement MyStatement = (PreparedStatement) NewConnection
+				.prepareStatement("insert into RESERVATIONS value (?,?,?,?,'no','no',?,?,'single','no','no','no','no',?,'no');");
+	    MyStatement.setString(1, id);
+	    MyStatement.setString(2, DateColumn.getCellData(index));
+	    MyStatement.setString(3, HourColumn.getCellData(index));
 	    String DayOfTheWeek = DateColumn.getCellData(index);
 	    LocalDate Day = LocalDate.parse(DayOfTheWeek);
 	    DayOfWeek Day1 = Day.getDayOfWeek();
-	    MyStatement.setString(3, Day1.toString());
-	    MyStatement.setString(4, RoomsColumn.getCellData(index));
-	    MyStatement.setString(5, BuildingColumn.getCellData(index));
-	    MyStatement.setString(6, UserColumn.getCellData(index));
+	    MyStatement.setString(4, Day1.toString());
+	    MyStatement.setString(5, RoomsColumn.getCellData(index));
+	    MyStatement.setString(6, BuildingColumn.getCellData(index));
+	    MyStatement.setString(7, UserColumn.getCellData(index));
 		MyStatement.execute();
-		NewConnection.close();
 		}
 	private int index;
 	private AddReservation (int index) {
@@ -260,6 +300,9 @@ public class AddNewUsersReservationPanelController {
 		try {
 			insert_reservation(index);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -296,6 +339,30 @@ public class AddNewUsersReservationPanelController {
 	private void ask_what_next() {
 		AskPane1.setVisible(true);
 		AskPane2.setVisible(true);
+		DeleteButton.setDisable(true);
+		AddButton.setDisable(true);
+		UndoButton.setDisable(true);
+	}
+	
+	private void ask_what_next1() {
+		AskPane1.setVisible(true);
+		AskPane3.setVisible(true);
+		DeleteButton.setDisable(true);
+		AddButton.setDisable(true);
+		UndoButton.setDisable(true);
+	}
+	@FXML
+	private void say_ok() {
+		AskPane1.setVisible(false);
+		AskPane3.setVisible(false);
+		DeleteButton.setDisable(false);
+		AddButton.setDisable(false);
+		UndoButton.setDisable(false);
+		MyTable1.setVisible(false);
+		Data.clear();
+		SetData thread1 = new SetData();
+	    thread1.run();
+		MyTable1.setVisible(true);
 	}
 	
 	@FXML 
@@ -323,16 +390,16 @@ public class AddNewUsersReservationPanelController {
 	@FXML
 	public void say_yes_button() throws SQLException, IOException {	
 		AskPane1.setVisible(false);
-		Label1.setText("Czy chcesz usunąć lub dodać kolejne rzeczy?");
+		Label1.setText("Czy chcesz usunąć lub dodać kolejne rezerwacje?");
 		AskPane2.setVisible(false);
 		DeleteButton.setDisable(false);
 		AddButton.setDisable(false);
 		UndoButton.setDisable(false);
-		MyTable.setVisible(false);
+		MyTable1.setVisible(false);
 		Data.clear();
 		SetData thread1 = new SetData();
 	    thread1.run();
-		MyTable.setVisible(true);
+		MyTable1.setVisible(true);
 	}
 	
 	@FXML
@@ -377,16 +444,24 @@ public class AddNewUsersReservationPanelController {
 					thread3.run();
 					DeleteReservation thread4 = new DeleteReservation(i);
 					thread4.run();
+					ask_what_next();
 				}
 				else
 				{
-					Label1.setText("Istnieje już rezerwacja z tymi parametrami. Rezerwacja zostanie usunięta");
+					DeleteReservation thread4 = new DeleteReservation(i);
+					thread4.run();
+					ask_what_next1();
 				}
 			}
 		}
-		ask_what_next();
-	}
 	
+	}
+	@FXML
+	Label Label2;
+	@FXML
+	Pane AskPane3;
+	@FXML
+	Button OkButton;
 	@FXML
 	Button UndoButton;
 	

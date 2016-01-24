@@ -14,49 +14,14 @@
     -fx-text-fill: black;
 }
 
-.table-view {
-    -fx-base: white;
-    -fx-control-inner-background: white;
-    -fx-background-color: white;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
-    -fx-padding: 5;
-}
 
-.table-view .column-header-background {
-    -fx-background-color: transparent;
-}
 
 .label {
 	
 }
 
-.progress-indicator:indeterminate > .spinner {
-    -fx-background-color: white;
-}
 
-.table-view .column-header, .table-view .filler {
-    -fx-size: 20;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: 
-        transparent
-        transparent
-        derive(-fx-base, 80%) 
-        transparent;
-    -fx-border-insets: 0 10 1 0;
-}
 
-.table-view .column-header .label {
-    -fx-font-size: 20pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: black;
-    -fx-alignment: center-left;
-    -fx-opacity: 1;
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
-}
 
 /*******************************************************************************
  *                                                                             *
@@ -148,6 +113,10 @@
 .toggle-button:hover {
     -fx-background-color: #d8d8d8;
     -fx-text-fill: black;
+}
+
+.progress-indicator:indeterminate > .spinner {
+    -fx-background-color: white;
 }
 
 .toggle-button:selected {

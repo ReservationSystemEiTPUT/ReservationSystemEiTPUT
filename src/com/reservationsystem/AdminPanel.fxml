@@ -6,9 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="392.0" stylesheets="@moj.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AdminPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="392.0" stylesheets="@AdminPanelStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.AdminPanelController">
    <children>
-      <Button fx:id="Reservations" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#click_add_reservation_button" prefHeight="81.0" prefWidth="365.0" text="Stwórz rezerwację" />
+      <Button fx:id="Reservations" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#click_add_reservation_button" prefHeight="81.0" prefWidth="365.0" text="Dodaj rezerwację" />
       <Button layoutX="13.0" layoutY="105.0" mnemonicParsing="false" onAction="#click_add_new_reservation" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj nowymi rezerwacjami" />
       <Button layoutX="13.0" layoutY="200.0" mnemonicParsing="false" onAction="#click_add_new_users" prefHeight="81.0" prefWidth="365.0" text="Zarządzaj nowymi kontami użytkowników" />
       <Button fx:id="MultipleReservation" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#click_add_multiple_reservation" prefHeight="67.0" prefWidth="168.0" text="Cykliczna" visible="false" />

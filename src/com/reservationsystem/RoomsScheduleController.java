@@ -3,10 +3,8 @@ package com.reservationsystem;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.AllPermission;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -14,10 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-import com.reservationsystem.RoomsScheduleController.Rooms;
-import com.reservationsystem.UserReservationPanelContoller.buildingChanged;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -25,31 +21,23 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 
 
@@ -306,6 +294,7 @@ public class RoomsScheduleController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		dateLabel.setFont(Font.font("Segoe UI", 16));
 		rightButton.setDisable(true);
 		leftButton.setDisable(true);
 		dateLabel.setAlignment(Pos.CENTER);

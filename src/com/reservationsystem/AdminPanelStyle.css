@@ -28,13 +28,8 @@
 }
 
 .label {
-	
+	-fx-text-fill: black;
 }
-
-.progress-indicator:indeterminate > .spinner {
-    -fx-background-color: white;
-}
-
 .table-view .column-header, .table-view .filler {
     -fx-size: 20;
     -fx-border-width: 0 0 1 0;
@@ -63,11 +58,14 @@
  * Push Button                                                                 *
  *                                                                             *
  ******************************************************************************/
+.progress-indicator:indeterminate > .spinner {
+    -fx-background-color: white;
+}
 
 .button {
     -fx-padding: 5 22 5 22;
 
-    -fx-border-color: transparent;
+    -fx-border-color: #d8d8d8;
     -fx-border-width: 2;
 
     -fx-background-radius: 0;
@@ -631,9 +629,9 @@
  * TextBox (and PasswordBox)                                                   *
  *                                                                             *
  ******************************************************************************/
-/* .text-field{
+.text-field{
     -fx-skin: "jfxtras.styles.jmetro8.MetroTextFieldSkin";
-}*/ 
+}
 
 .text-input{
     -fx-background-radius: 0, 0;
@@ -702,10 +700,10 @@
  * PasswordBox                                                                 *
  *                                                                             *
  ******************************************************************************/
-/*
+
 .password-field {
     -fx-skin: "jfxtras.styles.jmetro8.MetroPasswordFieldSkin";
-}*/
+}
 
 .password-field > .right-button > .right-button-graphic {
     -fx-shape            : "M307.688,399.564c0,1.484-1.203,2.688-2.688,2.688c-1.484,0-2.688-1.203-2.688-2.688s1.203-2.688,2.688-2.688C306.484,396.876,307.688,398.08,307.688,399.564z M297.5,399h2.5c0,0,1.063-4,5-4c3.688,0,5,4,5,4h2.5c0,0-2.063-6.5-7.5-6.5C299,392.5,297.5,399,297.5,399z";
@@ -729,19 +727,6 @@
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
-
-
-.progress-indicator .indicator {
-    -fx-background-color:
-        -fx-box-border,
-        -fx-outer-border,
-        -fx-inner-border,
-        -fx-body-color;
-    -fx-background-insets: 1 0 -1 0, 0, 1, 2;
-    -fx-padding: 0.083333em; /* 1 */
-}
-
-
 
 /*******************************************************************************
  *                                                                             *
@@ -927,8 +912,6 @@
 }
 
 
-
-
 /*******************************************************************************
  *                                                                             *
  * DatePicker                                                                  *
@@ -1105,8 +1088,3 @@
     -fx-background-color: -fx-background;
     -fx-background-insets: 0;
 }
-
-
-/*TEXTFIELD*/
-
-

@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
@@ -28,12 +27,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-
-
-
+import javafx.stage.Stage;
 
 
 public class UserSettingsController implements Initializable{
@@ -109,6 +105,7 @@ public class UserSettingsController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		progressIndicator.setStyle("-fx-background-color: #FFFFFF;");
 		phoneField.addEventFilter(KeyEvent.KEY_TYPED, numeric_Validation(9));
 		progressIndicator.setVisible(true);
 		mainPane.setVisible(false);
@@ -169,7 +166,7 @@ public class UserSettingsController implements Initializable{
 			}
 	          Scene user_panel_scene = new Scene(user_panel_page);
 	          Stage app_stage = (Stage) cancel.getScene().getWindow();
-	          
+	          app_stage.setTitle("Panel u¿ytkownika");
 	          app_stage.setScene(user_panel_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();
@@ -383,6 +380,8 @@ public class UserSettingsController implements Initializable{
                     }
                 });
 			}
+			applyChanges.setDisable(false);
+			cancel.setDisable(false);
         	phoneField.getScene().setCursor(Cursor.DEFAULT);
 			return null;
 		}

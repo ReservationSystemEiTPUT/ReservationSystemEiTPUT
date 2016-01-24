@@ -41,8 +41,8 @@ public class MultipleReservationPanelController {
 	@FXML
 	private ChoiceBox <String> BuildingBox;	
 	ObservableList<String> YearList = FXCollections
-			.observableArrayList("1I","2I","3I","4I","1M","2M");	
-	String TableYear [] = {"1I","2I","3I","4I","1M","2M"};
+			.observableArrayList("1INZ","2INZ","3INZ","4INZ","1MGR","2MGR");	
+	String TableYear [] = {"1INZ","2INZ","3INZ","4INZ","1MGR","2MGR"};
 	@FXML
 	private ChoiceBox <String> YearBox;
 	ObservableList<String> HoursList = FXCollections
@@ -153,7 +153,7 @@ public class MultipleReservationPanelController {
         
         Count.textProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.matches("\\d*")) {
+                if (newValue.matches("\\d*") || (Integer.parseInt(Count.getText())<20)) {
                     int value = Integer.parseInt(newValue);
     				AddButton.setDisable(true);
 
@@ -162,6 +162,26 @@ public class MultipleReservationPanelController {
                 }
             }
         });
+   /*     SubjectBox.textProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches("\\w*")) {
+                    int value = Integer.parseInt(newValue);
+    				AddButton.setDisable(true);
+                } else {
+                    SubjectBox.setText(oldValue);
+                }
+            }
+        });
+        LecturerBox.textProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches("\\w*")) {
+                    int value = Integer.parseInt(newValue);
+    				AddButton.setDisable(true);
+                } else {
+                    LecturerBox.setText(oldValue);
+                }
+            }
+        });*/
         SubjectBox.textProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
           
@@ -292,15 +312,8 @@ public class MultipleReservationPanelController {
 		private String Year;
 		private ResultSet give_group () throws SQLException{		
 			Connection NewConnection = Main.getConnection();		
-			PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 1I");		
-			switch(Year){
-			case "1I" : break;
-			case "2I" : NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 2I");break;
-			case "3I" : NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 3I");break;
-			case "4I" : NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 4I");break;
-			case "1M" : NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 1M");break;
-			case "2M" : NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from 2M");break;
-			}		
+			PreparedStatement NewPreparedStatement = (PreparedStatement) NewConnection.prepareStatement("select * from GROUPS WHERE Year=?");
+			NewPreparedStatement.setString(1, Year);
 			ResultSet NewResult = NewPreparedStatement.executeQuery();	
 			return NewResult;
 		}
@@ -314,7 +327,7 @@ public class MultipleReservationPanelController {
 			ObservableList<String> ListOfGroup = FXCollections.observableArrayList();
 			
 			while (NewResult.next()) {
-				ListOfGroup.add(NewResult.getString("Name_of_group"));
+				ListOfGroup.add(NewResult.getString("Number_of_group"));
 			}
 			
 			return ListOfGroup;
@@ -380,6 +393,10 @@ public class MultipleReservationPanelController {
 	                            		(item.isAfter(free1) && item.isBefore(free2)) || item.isAfter(block)){ 
 	                                    setDisable(true);
 	                                    setStyle("-fx-background-color: #98FFBA;");
+	 	                        	   if (item.isBefore(myDate5)) {
+		                        		   setDisable(false);
+		                        		   setStyle("-fx-background-color: white;");
+		                        	   }
 	                            }   
 	                            }
 	                           else if (Value==0){
@@ -393,15 +410,28 @@ public class MultipleReservationPanelController {
 		                            		|| (item.isAfter(myDate19) && item.isBefore(myDate20))){
 	                                    setDisable(true);
 	                                    setStyle("-fx-background-color: #98FFBA;");
+	 	                        	   if (item.isBefore(myDate5)) {
+		                        		   setDisable(false);
+		                        		   setStyle("-fx-background-color: white;");
+		                        	   }
 	                            }
 	                           }
 	                           else {
 	                        	   if (item.isBefore(DateBox.getValue()) || item.isEqual(free7) || item.isEqual(free6) || item.isEqual(free5)
 		                            		|| item.isEqual(free4) || item.isEqual(free3)|| item.isEqual(free2) || item.isEqual(free1) || 
-		                            		(item.isAfter(free1) && item.isBefore(free2)) || item.isAfter(block)) {
+		                            		(item.isAfter(free1) && item.isBefore(free2)) || item.isAfter(block) || !((item.isAfter(myDate1) && item.isBefore(myDate2))
+		                            		|| (item.isAfter(myDate3) && item.isBefore(myDate4)) || (item.isAfter(myDate5) && item.isBefore(myDate6))
+		                            		|| (item.isAfter(myDate7) && item.isBefore(myDate8)) || (item.isAfter(myDate9) && item.isBefore(myDate10))
+		                            		|| (item.isAfter(myDate11) && item.isBefore(myDate12)) || (item.isAfter(myDate13) && item.isBefore(myDate14))
+		                            		|| (item.isAfter(myDate15) && item.isBefore(myDate16)) || (item.isAfter(myDate17) && item.isBefore(myDate18))
+		                            		|| (item.isAfter(myDate19) && item.isBefore(myDate20))) ) {
 	                                    setDisable(true);
 	                                    setStyle("-fx-background-color: #98FFBA;");
 	                            }
+	                        	   if (item.isBefore(myDate5)) {
+	                        		   setDisable(false);
+	                        		   setStyle("-fx-background-color: white;");
+	                        	   }
 	                           }
 	                    }
 	                };
@@ -516,15 +546,15 @@ public class MultipleReservationPanelController {
 		if(isSelected)
 		{
 			String Hours[] = hours_to_check(HoursBox2.getValue());
-			HourValue = Hours[0];System.out.println(HourValue);
-			HourValue2 = Hours[1];System.out.println(HourValue2);
+			HourValue = Hours[0];
+			HourValue2 = Hours[1];
 		}
 		else {HourValue = HoursBox.getValue();}
 		LocalDate DateValue = DateBox.getValue();
 		String BuildingValue = BuildingBox.getValue();
 		String RoomValue = RoomsNumberBox.getValue();
 		Connection con = Main.getConnection();
-		for(int i = 0; i < Integer.parseInt(Count.getText());i++) {
+		for(int i = 0; i < (Integer.parseInt(Count.getText()))*2;i++) {
 			String DateValue1 = DateValue.plusWeeks(i).toString();
 		    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("SELECT COUNT(*) FROM RESERVATIONS where "
 					+ "Date=? and Hour=? and Building=? and Room=? and Type_of_reservation='multiple'");
@@ -577,7 +607,7 @@ public class MultipleReservationPanelController {
 			AddButton.setDisable(false);
 		}
 		else {
-			LabelField.setText("Istnieje już rezerwacja!");
+			LabelField.setText("Istnieje rezerwacja o danych parametrach!");
 			AddButton.setDisable(true);
 		}
 		}
@@ -595,9 +625,29 @@ public class MultipleReservationPanelController {
 		UndoButton.setDisable(false);
 	}
 	
+	public class WhatID implements Callable {
+
+		private String return_id() throws SQLException {
+			Connection NewConnection = Main.getConnection();
+			PreparedStatement MyStatement = (PreparedStatement) NewConnection
+					.prepareStatement("select id from RESERVATIONS ORDER BY ID DESC LIMIT 1");
+			ResultSet MyResult = MyStatement.executeQuery();
+			MyResult.next();
+			int result = MyResult.getInt(1);
+			return Integer.toString(result + 1);
+		}
+		
+		@Override
+		public Object call() throws Exception {
+			// TODO Auto-generated method stub
+			return return_id();
+		}
+		
+	}
+	
 	private class AddReservation implements Runnable {
 		
-		private void add_reservation() throws SQLException {
+		private void add_reservation() throws Exception {
 			String HoursBoxValue,HoursBoxValue2 = null;
 			boolean isSelected = DoubleReservation.isSelected();
 			if(isSelected)
@@ -626,30 +676,56 @@ public class MultipleReservationPanelController {
 			if(EvenValue=="yes" && OddValue=="yes") {
 			for(int i = 0; i < Integer.parseInt(Count.getText());i++) {
 				String DateValue1 = DateBoxValue.plusWeeks(i).toString();
+				PreparedStatement MyStatement7 = (PreparedStatement) con.prepareStatement("INSERT INTO"
+						+ " DELETE_RESERVATIONS (SELECT * FROM RESERVATIONS WHERE Date=? and Hour=? "
+						+ "and Building=? and Room=?  and User!='Admin')");
+				MyStatement7.setString(1, DateValue1);
+				MyStatement7.setString(2, HoursBoxValue);
+				MyStatement7.setString(3, BuildingBoxValue);
+				MyStatement7.setString(4, RoomsNumberBoxValue);
+				MyStatement7.executeUpdate();
+				MyStatement7.executeUpdate();
+				PreparedStatement MyStatement4 = (PreparedStatement) con.prepareStatement("update DELETE_RESERVATIONS SET SMS='no' "
+						+ "where SMS='yes'");
+				MyStatement4.executeUpdate();
 				PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement("delete from "
 				    		+ "NEW_RESERVATIONS where Date=? and Hour=? and Building=? and Room=?");
 				MyStatement1.setString(1, DateValue1);
 				MyStatement1.setString(2, HoursBoxValue);
 		        MyStatement1.setString(3, BuildingBoxValue);
 			    MyStatement1.setString(4, RoomsNumberBoxValue);				    
-				MyStatement1.executeUpdate();
-				
-			    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
-			    MyStatement.setString(1, DateValue1);
-			    MyStatement.setString(2, HoursBoxValue);
-			    MyStatement.setString(3, Day);
-			    MyStatement.setString(4, EvenValue);
-			    MyStatement.setString(5, OddValue);
-			    MyStatement.setString(6, RoomsNumberBoxValue);
-			    MyStatement.setString(7, BuildingBoxValue);
-				MyStatement.setString(8,SubjectBoxValue);
-				MyStatement.setString(9,LecturerBoxValue);
-				MyStatement.setString(10,YearBoxValue);
-				MyStatement.setString(11,GroupBoxValue);
+			    WhatID thread1 = new WhatID();
+			    String id = (String) thread1.call();
+			    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into "
+			    		+ "RESERVATIONS value (?,?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
+			    MyStatement.setString(1, id);
+			    MyStatement.setString(2, DateValue1);
+			    MyStatement.setString(3, HoursBoxValue);
+			    MyStatement.setString(4, Day);
+			    MyStatement.setString(5, EvenValue);
+			    MyStatement.setString(6, OddValue);
+			    MyStatement.setString(7, RoomsNumberBoxValue);
+			    MyStatement.setString(8, BuildingBoxValue);
+				MyStatement.setString(9,SubjectBoxValue);
+				MyStatement.setString(10,LecturerBoxValue);
+				MyStatement.setString(11,YearBoxValue);
+				MyStatement.setString(12,GroupBoxValue);
 				MyStatement.execute();
 				if(isSelected)
 				{
-					PreparedStatement MyStatement2 = (PreparedStatement) con.prepareStatement("delete from "
+				PreparedStatement MyStatement5 = (PreparedStatement) con.prepareStatement("INSERT INTO"
+							+ " DELETE_RESERVATIONS (SELECT * FROM RESERVATIONS WHERE Date=? and Hour=? "
+							+ "and Building=? and Room=?  and User!='Admin')");
+				MyStatement5.setString(1, DateValue1);
+				MyStatement5.setString(2, HoursBoxValue);
+				MyStatement5.setString(3, BuildingBoxValue);
+				MyStatement5.setString(4, RoomsNumberBoxValue);
+				MyStatement5.executeUpdate();
+				MyStatement5.executeUpdate();
+				PreparedStatement MyStatement6 = (PreparedStatement) con.prepareStatement("update DELETE_RESERVATIONS SET SMS='no' "
+						+ "where SMS='yes'");
+				MyStatement6.executeUpdate();
+				PreparedStatement MyStatement2 = (PreparedStatement) con.prepareStatement("delete from "
 				    		+ "NEW_RESERVATIONS where Date=? and Hour=? and Building=? and Room=?");
 				MyStatement2.setString(1, DateValue1);
 				MyStatement2.setString(2, HoursBoxValue2);
@@ -657,23 +733,27 @@ public class MultipleReservationPanelController {
 			    MyStatement2.setString(4, RoomsNumberBoxValue);				    
 				MyStatement2.executeUpdate();
 				
-			    PreparedStatement MyStatement3 = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
-			    MyStatement3.setString(1, DateValue1);
-			    MyStatement3.setString(2, HoursBoxValue2);
-			    MyStatement3.setString(3, Day);
-			    MyStatement3.setString(4, EvenValue);
-			    MyStatement3.setString(5, OddValue);
-			    MyStatement3.setString(6, RoomsNumberBoxValue);
-			    MyStatement3.setString(7, BuildingBoxValue);
-				MyStatement3.setString(8,SubjectBoxValue);
-				MyStatement3.setString(9,LecturerBoxValue);
-				MyStatement3.setString(10,YearBoxValue);
-				MyStatement3.setString(11,GroupBoxValue);
+				WhatID thread2 = new WhatID();
+				id = (String) thread2.call();
+				PreparedStatement MyStatement3 = (PreparedStatement) con.prepareStatement("insert into "
+				    		+ "RESERVATIONS value (?,?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','yes');");
+				MyStatement3.setString(1, id);
+			    MyStatement3.setString(2, DateValue1);
+			    MyStatement3.setString(3, HoursBoxValue2);
+			    MyStatement3.setString(4, Day);
+			    MyStatement3.setString(5, EvenValue);
+			    MyStatement3.setString(6, OddValue);
+			    MyStatement3.setString(7, RoomsNumberBoxValue);
+			    MyStatement3.setString(8, BuildingBoxValue);
+				MyStatement3.setString(9,SubjectBoxValue);
+				MyStatement3.setString(10,LecturerBoxValue);
+				MyStatement3.setString(11,YearBoxValue);
+				MyStatement3.setString(12,GroupBoxValue);
 				MyStatement3.execute();
 				}}
 			}
 			else {
-			for(int i = 0; i < Integer.parseInt(Count.getText());i+=2) {
+			for(int i = 0; i < (Integer.parseInt(Count.getText()))*2;i+=2) {
 				String DateValue1 = DateBoxValue.plusWeeks(i).toString();
 				PreparedStatement MyStatement1 = (PreparedStatement) con.prepareStatement("delete from "
 				    		+ "NEW_RESERVATIONS where Date=? and Hour=? and Building=? and Room=?");
@@ -682,19 +762,21 @@ public class MultipleReservationPanelController {
 		        MyStatement1.setString(3, BuildingBoxValue);
 			    MyStatement1.setString(4, RoomsNumberBoxValue);				    
 				MyStatement1.executeUpdate();
-				
-			    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
-			    MyStatement.setString(1, DateValue1);
-			    MyStatement.setString(2, HoursBoxValue);
-			    MyStatement.setString(3, Day);
-			    MyStatement.setString(4, EvenValue);
-			    MyStatement.setString(5, OddValue);
-			    MyStatement.setString(6, RoomsNumberBoxValue);
-			    MyStatement.setString(7, BuildingBoxValue);
-				MyStatement.setString(8,SubjectBoxValue);
-				MyStatement.setString(9,LecturerBoxValue);
-				MyStatement.setString(10,YearBoxValue);
-				MyStatement.setString(11,GroupBoxValue);
+				WhatID thread1 = new WhatID();
+				String id = (String) thread1.call();
+			    PreparedStatement MyStatement = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
+			    MyStatement.setString(1, id);
+			    MyStatement.setString(2, DateValue1);
+			    MyStatement.setString(3, HoursBoxValue);
+			    MyStatement.setString(4, Day);
+			    MyStatement.setString(5, EvenValue);
+			    MyStatement.setString(6, OddValue);
+			    MyStatement.setString(7, RoomsNumberBoxValue);
+			    MyStatement.setString(8, BuildingBoxValue);
+				MyStatement.setString(9,SubjectBoxValue);
+				MyStatement.setString(10,LecturerBoxValue);
+				MyStatement.setString(11,YearBoxValue);
+				MyStatement.setString(12,GroupBoxValue);
 				MyStatement.execute();
 				if(isSelected)
 				{
@@ -705,19 +787,21 @@ public class MultipleReservationPanelController {
 		        MyStatement2.setString(3, BuildingBoxValue);
 			    MyStatement2.setString(4, RoomsNumberBoxValue);				    
 				MyStatement2.executeUpdate();
-				
-			    PreparedStatement MyStatement3 = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
-			    MyStatement3.setString(1, DateValue1);
-			    MyStatement3.setString(2, HoursBoxValue2);
-			    MyStatement3.setString(3, Day);
-			    MyStatement3.setString(4, EvenValue);
-			    MyStatement3.setString(5, OddValue);
-			    MyStatement3.setString(6, RoomsNumberBoxValue);
-			    MyStatement3.setString(7, BuildingBoxValue);
-				MyStatement3.setString(8,SubjectBoxValue);
-				MyStatement3.setString(9,LecturerBoxValue);
-				MyStatement3.setString(10,YearBoxValue);
-				MyStatement3.setString(11,GroupBoxValue);
+				WhatID thread2 = new WhatID();
+				id = (String) thread2.call();
+			    PreparedStatement MyStatement3 = (PreparedStatement) con.prepareStatement("insert into RESERVATIONS value (?,?,?,?,?,?,?,?,'multiple',?,?,?,?,'Admin','no');");
+			    MyStatement3.setString(1, id);
+			    MyStatement3.setString(2, DateValue1);
+			    MyStatement3.setString(3, HoursBoxValue2);
+			    MyStatement3.setString(4, Day);
+			    MyStatement3.setString(5, EvenValue);
+			    MyStatement3.setString(6, OddValue);
+			    MyStatement3.setString(7, RoomsNumberBoxValue);
+			    MyStatement3.setString(8, BuildingBoxValue);
+				MyStatement3.setString(9,SubjectBoxValue);
+				MyStatement3.setString(10,LecturerBoxValue);
+				MyStatement3.setString(11,YearBoxValue);
+				MyStatement3.setString(12,GroupBoxValue);
 				MyStatement3.execute();
 				}
 			}}
@@ -730,6 +814,9 @@ public class MultipleReservationPanelController {
 			try {
 				add_reservation();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

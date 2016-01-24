@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+import java.util.concurrent.Callable;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -92,7 +92,9 @@ public class UserReservationPanelContoller implements Initializable{
 		buildingChoice.setDisable(true);
 		sizeChoice.setItems(sizeList);
 		hourChoice.getSelectionModel().clearSelection();		
-		dateBox.setValue(LocalDate.now().plusDays(1));
+		LocalDate day = LocalDate.now().plusDays(1);
+		dateBox.setValue(day);
+		
 		final Callback<DatePicker, DateCell> dayCellFactory = 
 	            new Callback<DatePicker, DateCell>() {
 	                @Override
@@ -102,7 +104,7 @@ public class UserReservationPanelContoller implements Initializable{
 	                        public void updateItem(LocalDate item, boolean empty) {
 	                            super.updateItem(item, empty);
 	                           
-	                            if (item.isBefore(dateBox.getValue()) || item.isAfter(dateBox.getValue().plusDays(13))) {
+	                            if (item.isBefore(day) || item.isAfter(day.plusDays(13))) {
 	                                    setDisable(true);
 	                                    setStyle("-fx-background-color: #ffc0cb;");
 	                            }   
@@ -116,16 +118,21 @@ public class UserReservationPanelContoller implements Initializable{
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					System.out.println("ROZMIAR: " + newValue.intValue());
 					if (newValue.intValue() != -1){
-					reservationUnSucceed.setVisible(false);
-					noRoomsNotification.setVisible(false);
-    		    	buildingChoice.getSelectionModel().clearSelection();
-					buildingChoice.setDisable(true);
-    		    	roomChoice.getSelectionModel().clearSelection();
-    		    	roomChoice.setDisable(true);
+						
+						reservationUnSucceed.setVisible(false);
+						noRoomsNotification.setVisible(false);
+	    		    	buildingChoice.getSelectionModel().clearSelection();
+					    roomChoice.getSelectionModel().clearSelection();
+					    if (!roomChoice.getItems().isEmpty())
+					       roomChoice.getItems().clear();
+					    if (!buildingChoice.getItems().isEmpty())
+						   roomChoice.getItems().clear();
+					    
+	    		    	roomChoice.setDisable(true);
+	    		    	buildingChoice.setDisable(true);
 						sizeChanged task = new sizeChanged(sizeChoiceArray[newValue.intValue()]);
-		                new Thread(task).start(); //2
+			            new Thread(task).start(); //2
 					}
 				}
 			}); 
@@ -150,7 +157,7 @@ public class UserReservationPanelContoller implements Initializable{
 					reservationUnSucceed.setVisible(false);
 					roomChoice.getSelectionModel().clearSelection();
 					roomChoice.getItems().clear();
-					buildingChanged task = new buildingChanged (buildingsList.get(newValue.intValue()));
+					buildingChanged task = new buildingChanged (buildingChoice.getItems().get(newValue.intValue()));
 					new Thread(task).start();
 					}
 				}
@@ -176,6 +183,28 @@ public class UserReservationPanelContoller implements Initializable{
 		new Thread(task).start();
 	}
 	
+
+	public class WhatID implements Callable {
+
+		private String return_id() throws SQLException {
+			Connection NewConnection = Main.getConnection();
+			PreparedStatement MyStatement = (PreparedStatement) NewConnection
+					.prepareStatement("select id from RESERVATIONS ORDER BY ID DESC LIMIT 1");
+			ResultSet MyResult = MyStatement.executeQuery();
+			MyResult.next();
+			int result = MyResult.getInt(1);
+			NewConnection.close();
+			return Integer.toString(result + 1);
+		}
+		
+		@Override
+		public Object call() throws Exception {
+			// TODO Auto-generated method stub
+			return return_id();
+		}
+		
+	}
+	
 	public class createButton extends Task {
 
 		@Override
@@ -188,19 +217,22 @@ public class UserReservationPanelContoller implements Initializable{
 		    PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT * FROM RESERVATIONS WHERE DATE = ? AND ROOM = ? AND BUILDING = ? AND HOUR = ? ");
 		    stmt.setDate(1, date);
 		    stmt.setString(2, roomsList.get(roomChoice.getSelectionModel().getSelectedIndex()));
-		    stmt.setString(3, buildingsList.get(buildingChoice.getSelectionModel().getSelectedIndex()));
+		    stmt.setString(3, buildingChoice.getValue());
 		    stmt.setString(4, HoursList.get(hourChoice.getSelectionModel().getSelectedIndex()));
 		    ResultSet rs = stmt.executeQuery();
-		    
+		   
 		    if (!rs.next()){
 		    
-				stmt = (PreparedStatement) con.prepareStatement("INSERT INTO users_reservations VALUES(?,?,?,?,?,?)");
-				stmt.setDate(1,date);
-				stmt.setString(2,HoursList.get(hourChoice.getSelectionModel().getSelectedIndex()));
-				stmt.setString(3, daysTable[date.getDay()]);
-				stmt.setString(4, roomsList.get(roomChoice.getSelectionModel().getSelectedIndex()));
-				stmt.setString(5, buildingsList.get(buildingChoice.getSelectionModel().getSelectedIndex()));
-				stmt.setString(6, Main.login);
+				stmt = (PreparedStatement) con.prepareStatement("INSERT INTO users_reservations VALUES(?,?,?,?,?,?,?)");
+				WhatID thread1 = new WhatID();
+                String id = (String) thread1.call();
+                stmt.setString(1,id);
+				stmt.setDate(2,date);
+				stmt.setString(3,HoursList.get(hourChoice.getSelectionModel().getSelectedIndex()));
+				stmt.setString(4, daysTable[date.getDay()]);
+				stmt.setString(5, roomsList.get(roomChoice.getSelectionModel().getSelectedIndex()));
+				stmt.setString(6, buildingChoice.getValue());
+				stmt.setString(7, Main.login);
 				stmt.execute();
 				reservationSucceed.setVisible(true);
 				created = true;
@@ -239,7 +271,7 @@ public class UserReservationPanelContoller implements Initializable{
 			}
 	          Scene user_panel_scene = new Scene(user_panel_page);
 	          Stage app_stage = (Stage) create.getScene().getWindow();
-	          
+	          app_stage.setTitle("Panel u¿ytkownika");
 	          app_stage.setScene(user_panel_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();
@@ -276,10 +308,9 @@ public class UserReservationPanelContoller implements Initializable{
 		    
 		    @Override
 		    protected Object call() throws Exception {
-		    	buildingsList.clear();
-		    	roomsList.clear();
-		    	
-		    	
+		    	//roomsList.clear();
+		    	ObservableList<String> buildingsList2 = FXCollections
+		    			.observableArrayList();
 		    	LocalDate localDate = dateBox.getValue();
 				Date date = Date.valueOf(localDate);	
 				Connection con = Main.getConnection();
@@ -290,14 +321,20 @@ public class UserReservationPanelContoller implements Initializable{
 					stmt.setString(2, newHour);
 					stmt.setInt(3, newSize);
 					ResultSet rs = stmt.executeQuery();
+					
 				    while (rs.next())
 				    {
-				    	buildingsList.add(rs.getString("BUILDING"));
+				    	String building = rs.getString("BUILDING");
+				    	if (Main.employed || !building.equals("CW"))
+				    		buildingsList2.add(building);
+				    	
 				    }
+
      			    stmt = (PreparedStatement) con.prepareStatement("SELECT DISTINCT BUILDING FROM RESERVATIONS WHERE DATE = ? AND HOUR = ? ;");
 				    stmt.setDate(1, date);
 					stmt.setString(2, newHour);
 				    rs = stmt.executeQuery();
+
 				    while(rs.next())
 				    {
 				    	String building = rs.getString("BUILDING");
@@ -312,25 +349,25 @@ public class UserReservationPanelContoller implements Initializable{
 				    	
 				    	if (rs2.next())
 				    	{
-				    		buildingsList.add(building);
+				    		if (Main.employed || !building.equals("CW"))
+					    	buildingsList2.add(building);
 				    	}
-				    	buildingsList = buildingsList.sorted();
+				    	//buildingsList = buildingsList.sorted();
+
 				    }
+
 				    con.close();
-				    
-				    if (buildingsList.isEmpty())
-				    {
-				    	noRoomsNotification.setVisible(true);
-				    }
+
+		
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		
 				Platform.runLater(new Runnable(){
                     @Override
                     public void run() {
-                    	
-                    	buildingChoice.setItems(buildingsList);
+                    	buildingChoice.setItems(buildingsList2);
                     	buildingChoice.setDisable(false);
                     	buildingChoice.getSelectionModel().clearSelection();
                     }
@@ -356,11 +393,11 @@ public class UserReservationPanelContoller implements Initializable{
 				roomsList.clear();
 			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT NUMBER FROM ROOMS WHERE NUMBER NOT IN (SELECT ROOM FROM RESERVATIONS"
 						+ " WHERE BUILDING = ? AND DATE = ? AND HOUR = ?) AND SIZE < ? AND BUILDING = ? ");
-				stmt.setString(1, buildingsList.get(buildingChoice.getSelectionModel().getSelectedIndex()));
+				stmt.setString(1, newBuilding);
 				stmt.setDate(2, date);
 				stmt.setString(3, HoursList.get(hourChoice.getSelectionModel().getSelectedIndex()));
 				stmt.setInt(4, sizeChoiceArray[sizeChoice.getSelectionModel().getSelectedIndex()] );
-				stmt.setString(5, buildingsList.get(buildingChoice.getSelectionModel().getSelectedIndex()));
+				stmt.setString(5, newBuilding);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next())
 				{

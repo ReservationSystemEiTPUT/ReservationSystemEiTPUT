@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -26,8 +28,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class CreatingAccountPanelController implements Initializable{
 
@@ -115,21 +118,39 @@ public class CreatingAccountPanelController implements Initializable{
 	boolean employee;
 	boolean smsNotification;
 	
+	List<Integer> numberPrefix = new ArrayList<Integer>();
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		numberPrefix.add(50);
+		numberPrefix.add(51);
+		numberPrefix.add(53);
+		numberPrefix.add(57);
+		numberPrefix.add(60);
+		numberPrefix.add(66);
+		numberPrefix.add(69);
+		numberPrefix.add(72);
+		numberPrefix.add(73);
+		numberPrefix.add(78);
+		numberPrefix.add(79);
+		numberPrefix.add(88);
+
 		employee = false;
 		smsNotification = false;
 		indexNo.addEventFilter(KeyEvent.KEY_TYPED, numeric_Validation(6));
 		phoneNumberField.addEventFilter(KeyEvent.KEY_TYPED, numeric_Validation(9));
-		//nameField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
-	//	surnameField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
+		studentNotification.setTextFill(Color.web("#cdab22"));
+		nameField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
+	    surnameField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
+	    passwordField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
+	    rePasswordField.addEventFilter(KeyEvent.KEY_TYPED, letter_Validation(50));
 	}
 	
     public boolean isValidEmailAddress(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        String ePattern = "^.+@.+(\\.[^\\.]+)+$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
+        
         return m.matches();
     }
 	
@@ -212,9 +233,10 @@ public class CreatingAccountPanelController implements Initializable{
                 if (txt_TextField.getText().length() >= max_Lengh) {                    
                     e.consume();
                 }
-                if(e.getCharacter().matches("[A-Za-z]") || e.getCharacter().matches("-")){ 
+                if(e.getCharacter().matches(" ")){ 
+                	 e.consume();
                 }else{
-                    e.consume();
+                   
                 }
             }
         };
@@ -266,9 +288,9 @@ public class CreatingAccountPanelController implements Initializable{
     {
     	if (!smsNotification)
     		return true;
-    	int firstDigit = Character.getNumericValue(phoneNumberField.getText().charAt(0));
-    	System.out.println(firstDigit);
-    	if(firstDigit > 4 && firstDigit < 9 && phoneNumberField.getLength() == 9)
+    	String twoDigits = Integer.toString(Character.getNumericValue(phoneNumberField.getText().charAt(0))) 
+    			+ Integer.toString(Character.getNumericValue(phoneNumberField.getText().charAt(1)));
+    	if(numberPrefix.contains(Integer.parseInt(twoDigits)) && phoneNumberField.getLength() == 9)
     		return true;
     	phoneNumberField.setStyle("-fx-border-color: red");
     	incorrectPhoneNumberLabel.setVisible(true);
@@ -367,9 +389,8 @@ public class CreatingAccountPanelController implements Initializable{
 
 			try {
 				con = DriverManager
-				.getConnection("jdbc:mysql://51.254.206.180/ROOMS_RESERVATION?useUnicode=true&characterEncoding=UTF-8","testUser","PASSWORD");	//user tylko do tworzenia kont
+				.getConnection("jdbc:mysql://51.254.206.180/ROOMS_RESERVATION?useUnicode=true&characterEncoding=UTF-8","addNewUsers","justForNewUsers");
 			} catch (SQLException e) {
-				System.out.println("Connection Failed! Check output console");
 				connectionFailedLabel.setVisible(true);
 				connectionFailedLabel.getScene().setCursor(Cursor.DEFAULT);
 				return;
@@ -394,7 +415,6 @@ public class CreatingAccountPanelController implements Initializable{
 				login = login.replace("ñ", "n");
 				login = login.replace("œ", "s");
 				login = login.replace("æ", "c");
-				System.out.print(login);
 			} else {
 				indexNumber = Integer.parseInt(indexNo.getText());
 			}
@@ -407,7 +427,6 @@ public class CreatingAccountPanelController implements Initializable{
 			
 			if (rs.next())
 			{
-				System.out.println("HHEEH");
 				indexRegistered.setVisible(true);
 				uniqueValues = false;
 				
@@ -469,7 +488,7 @@ public class CreatingAccountPanelController implements Initializable{
 			if (uniqueValues == true) {
 			
             try {
-				PreparedStatement stmt = (PreparedStatement) con.prepareStatement("INSERT INTO NEW_USERS VALUES(?,?,?,?,?,?,?,AES_ENCRYPT(?,UNHEX('F3229A0B371ED2D9441B830D21A390C3')),'NIE')");
+				PreparedStatement stmt = (PreparedStatement) con.prepareStatement("INSERT INTO NEW_USERS VALUES(?,?,?,?,?,?,?,AES_ENCRYPT(?,UNHEX('F3229A0B371ED2D9441B830D21A390C3')),'no')");
 				stmt.setString(1,login);
 				stmt.setString(2,nameField.getText());
 				stmt.setString(3,surnameField.getText());
@@ -490,8 +509,7 @@ public class CreatingAccountPanelController implements Initializable{
 			
 			}
             
-        	createButton.setDisable(false);
-        	cancelButton.setDisable(false);
+        	
 			connectionFailedLabel.getScene().setCursor(Cursor.DEFAULT); //and 
 			if (created == true) {
             accounCreatedSuccessful.setVisible(true);
@@ -503,7 +521,8 @@ public class CreatingAccountPanelController implements Initializable{
 					}
 		            changeScene();
 		   }
-
+			createButton.setDisable(false);
+        	cancelButton.setDisable(false);
 		}
 	}
     
@@ -519,7 +538,7 @@ public class CreatingAccountPanelController implements Initializable{
 			}
 	          Scene logged_page_scene = new Scene(logged_page);
 	          Stage app_stage = (Stage) nameField.getScene().getWindow();
-	          
+	          app_stage.setTitle("System Rezerwacji Sal");
 	          app_stage.setScene(logged_page_scene);
 	          app_stage.centerOnScreen();
 	          app_stage.show();

@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" stylesheets="@moj.css" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.UserReservationsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" stylesheets="@moj2.css"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.reservationsystem.UserReservationsController">
    <children>
-      <ChoiceBox fx:id="typeOfReservation" layoutX="377.0" layoutY="39.0" prefWidth="150.0" />
-      <Label layoutX="94.0" layoutY="39.0" prefHeight="25.0" prefWidth="186.0" text="Wybierz rodzaj rezerwacji" />
+      <ChoiceBox fx:id="typeOfReservation" layoutX="309.0" layoutY="39.0" prefWidth="250.0" />
+      <Label fx:id="label" layoutX="94.0" layoutY="25.0" prefHeight="55.0" prefWidth="300.0" text="Wybierz rodzaj rezerwacji:" />
       <Pane layoutX="41.0" layoutY="76.0">
          <children>
             <Pane fx:id="waitPane" layoutX="105.0" layoutY="30.0" prefHeight="200.0" prefWidth="309.0" visible="false">
